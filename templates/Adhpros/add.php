@@ -4,27 +4,27 @@
     <form class="col s12" methode="post" action="/adhpros/add">
       <div class="row">
         <div class="input-field col s2">
-          <input name="adh_id" id="adh_id" type="text" class="validate">
+          <input name="adh_id" id="adh_id" type="text" required class="validate">
           <label for="adh_id">Numéro d'adhérent</label>
         </div>
         <div class="input-field col s3">
-          <input name="date_adh" type="text" id="date_adh" class="datepicker">
+          <input name="date_adh" type="text" id="date_adh" required class="datepicker">
           <label for="date_adh">Date d'adhésion</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="orga_name" id="orga_name" type="text" class="validate">
+          <input name="orga_name" id="orga_name" type="text" required class="validate">
           <label for="orga_name">Nom de l'organisation</label>
         </div>
         <div class="input-field col s6">
-          <input name="orga_contact" id="orga_contact" type="text" class="validate">
+          <input name="orga_contact" id="orga_contact" type="text" required class="validate">
           <label for="orga_contact">Contact de l'organisation</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="email" id="email" type="email" class="validate">
+          <input name="email" id="email" type="email" required class="validate">
           <label for="email">Email</label>
         </div>
       </div>
