@@ -1,4 +1,5 @@
 <br>
+<h3>Ajouter un adhérent</h3>
   <div class="row">
     <?php echo $this->Form->create(); ?>
     <form class="col s12" methode="post" action="/adhs/add">
@@ -15,7 +16,7 @@
       <div class="row">
         <div class="input-field col s6">
           <select multiple name="adh_years[]" required>
-            <option value="" disabled selected>Choisir</option>
+            <option value="" disabled>Choisir</option>
             <?php
             $tmp=true;
             if (date("W")>=44){
@@ -56,7 +57,7 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="phonenumber" id="phonenumber" required type="text" class="validate">
+          <input name="phonenumber" id="phonenumber" type="text" class="validate">
           <label for="phonenumber">Téléphone</label>
         </div>
       </div>
@@ -88,7 +89,7 @@
       <div class="row">
         <div class="input-field col s6">
           <input name="amount" id="amount" required type="text" class="validate">
-          <label for="amount">Montant</label>
+          <label for="amount">Montant (entre 10 et 50)</label>
         </div>
       </div>
       <p>

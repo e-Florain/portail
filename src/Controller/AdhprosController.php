@@ -75,10 +75,10 @@ class AdhprosController extends AppController
             $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adh = $this->Adhpros->patchEntity($adhpro, $data);
             if ($this->Adhpros->save($adhpro)) {
-                $this->Flash->success(__('The adh has been saved.'));
+                $this->Flash->success(__('L\'adhérent a été ajouté.'));
                 return $this->redirect(['action' => 'add']);
             } else {
-                $this->Flash->error(__('Unable to add the adh.'));
+                $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
                 return $this->redirect('/adhs/index');
             } 
         }
@@ -120,10 +120,10 @@ class AdhprosController extends AppController
             }
             $adhpro = $this->Adhpros->patchEntity($adhpro, $data);
             if ($this->Adhpros->save($adhpro)) {
-                $this->Flash->success(__('The adh has been modified.'));
+                $this->Flash->success(__('L\'adhérent a été modifié.'));
                 return $this->redirect(['action' => 'add']);
             } else {
-                $this->Flash->error(__('Unable to add the adh.'));
+                $this->Flash->error(__('Erreur : Impossible de modifier l\'adhérent.'));
                 return $this->redirect('/adhpros/index');
             }
         }

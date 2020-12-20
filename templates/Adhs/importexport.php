@@ -5,7 +5,7 @@
         <div class="input-field file-field col s6">
         <div class="btn">
             <span>Pièce jointe</span>
-            <input name="uploadfile" id="uploadfile" type="file">
+            <input name="uploadfile" id="uploadfile" required type="file">
         </div>
         <div class="file-path-wrapper">
             <input class="file-path validate">

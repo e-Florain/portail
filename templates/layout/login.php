@@ -14,7 +14,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Florain - Portail';
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
   <nav class="nav-extended">
-    <div class="nav-wrapper light-green">
+    <div class="nav-wrapper">
       <img src="/img/logo-monnaie.svg" height="64"><a href="#" class="brand-logo">Florain</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">

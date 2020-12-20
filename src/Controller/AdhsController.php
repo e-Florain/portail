@@ -4,6 +4,7 @@
 namespace App\Controller;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use Cake\I18n\FrozenTime;
 
 class AdhsController extends AppController
 {
@@ -12,8 +13,8 @@ class AdhsController extends AppController
         "adh_id" => "Id",
         "adh_years" => "Année.s d'adh",
         "date_adh" => "Date d'adh",
-        "lastname" => "Prénom",
-        "firstname" => "Nom",
+        "lastname" => "Nom",
+        "firstname" => "Prénom",
         "email" => "Email",
         "city" => "Ville",
         "phonenumber" => "Tel",
@@ -66,13 +67,14 @@ class AdhsController extends AppController
             foreach ($data["adh_years"] as $adh_year) {
                 $tmp=$tmp.$adh_year.";";
             }
+            var_dump($tmp);
             $data["adh_years"] = $tmp;
             $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adh = $this->Adhs->newEntity($this->request->getData());
             if ($adh->getErrors()) {
                 var_dump($adh->getErrors());
             } else {
-                //$adh = $this->Adhs->patchEntity($adh, $data);
+                $adh = $this->Adhs->patchEntity($adh, $data);
                 if ($this->Adhs->save($adh)) {
                     $this->Flash->success(__('The adh has been saved.'));
                     return $this->redirect(['action' => 'add']);
@@ -140,9 +142,12 @@ class AdhsController extends AppController
                 $data = array();
                 $i=0;
                 $keys = str_getcsv($infos[0]);
-                //var_dump($infos);
+                //var_dump($keys);
                 for ($i=1;$i<count($infos);$i++) {
                     $datacsv = str_getcsv($infos[$i]);
+                    //var_dump($datacsv);
+                    //echo "<br>";
+                    //echo count($keys)." ".count($datacsv);
                     if (count($keys) == count($datacsv)) {
                         $data = array_combine($keys, $datacsv); 
                         if ($data != FALSE) {
@@ -172,12 +177,19 @@ class AdhsController extends AppController
 
     public function export()
     {
+        $now = FrozenTime::now();
+        $strfile = $now->format('Y-m-d').'_export_particuliers.csv';
         $users = $this->Adhs->find();
-        $file = new File('export.csv', true, 0644);
+        $file = new File($strfile, true, 0644);
         $exportCSV="";
-
+        $i=0;
         foreach($this->list_keys as $key=>$keyname) {
-            $exportCSV=$exportCSV.$key.",";
+            if ($i==(count($this->list_keys)-1)) {
+                $exportCSV=$exportCSV.$key;
+            } else {
+                $exportCSV=$exportCSV.$key.",";
+            }
+            $i++;
         }
         $exportCSV=$exportCSV."\n";
         $file->write($exportCSV);
@@ -196,7 +208,7 @@ class AdhsController extends AppController
         
         $response = $this->response->withFile(
             $path = $file->path,
-            ['download' => true, 'name' => 'export.csv']
+            ['download' => true, 'name' => $strfile]
         );
         return $response;
     }

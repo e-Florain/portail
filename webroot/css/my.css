@@ -40,3 +40,31 @@
 .icons {
     text-align: right;
 }
+
+.nav-wrapper, .nav-content, .page-footer {
+    background-color: #d7da23;
+}
+
+a.brand-logo {
+    color: #70706f;
+}
+
+.tabs.tabs-transparent .tab a.active {
+    color: #70706f;
+}
+
+.tabs.tabs-transparent .tab a, .tabs.tabs-transparent .tab.disabled a, .tabs.tabs-transparent .tab.disabled a:hover {
+    color: #70706f;
+}
+
+.tabs.tabs-transparent .tab a:hover {
+    color: #000000;
+}
+
+.footer-css {
+    color: #70706f;
+}
+
+nav ul a {
+    color: #70706f;
+}

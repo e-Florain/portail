@@ -14,7 +14,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Florain - Portail';
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,7 +49,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </ul>
 
   <nav class="nav-extended">
-    <div class="nav-wrapper light-green">
+    <div class="nav-wrapper">
       <img src="/img/logo-monnaie.svg" height="64"><a href="#" class="brand-logo">Florain</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -65,7 +65,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </li>
       </ul>
     </div>
-    <div class="nav-content light-green">
+    <div class="nav-content">
       <ul class="tabs tabs-transparent">
         <li class="tab"><a 
         <?php  if ($this->request->getParam('controller') == "Adhs" ) {
@@ -107,9 +107,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </footer>
     <footer class="page-footer">
       <div class="footer-copyright">
-        <div class="container">
+        <div class="container footer-css">
           © 2020 Le Florain
-          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+          <!--<a class="right footer-css" href="#!">More Links</a>-->
         </div>    
       </div>
     </footer>

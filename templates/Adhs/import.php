@@ -30,7 +30,7 @@
     ?>
 </table>
 <center>
-<a href="/adhpros/index" class="btn waves-effect waves-light" type="submit" name="action">Retour
+<a href="/adhs/index" class="btn waves-effect waves-light" type="submit" name="action">Retour
     <i class="material-icons right">keyboard_backspace</i>
 </a>
 </center>
