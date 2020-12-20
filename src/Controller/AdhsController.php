@@ -76,10 +76,10 @@ class AdhsController extends AppController
             } else {
                 $adh = $this->Adhs->patchEntity($adh, $data);
                 if ($this->Adhs->save($adh)) {
-                    $this->Flash->success(__('The adh has been saved.'));
+                    $this->Flash->success(__('L\'adhérent a été ajouté.'));
                     return $this->redirect(['action' => 'add']);
                 } else {
-                    $this->Flash->error(__('Unable to add the adh.'));
+                    $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
                     //return $this->redirect('/adhs/index');
                 }
             }
@@ -97,7 +97,7 @@ class AdhsController extends AppController
         $this->set('list_payment_type', $this->list_payment_type);
         if ($this->request->is('post')) {
             //var_dump($this->request->getData());
-            $adh = $this->Adhs->newEmptyEntity();
+            //$adh = $this->Adhs->newEmptyEntity();
             $data = $this->request->getData();
             //var_dump($data);
             if (isset($data["newsletter"])) {
@@ -106,18 +106,21 @@ class AdhsController extends AppController
                 } else {
                     $data["newsletter"] = False;
                 }
+            } else {
+                $data["newsletter"] = False;
             }
             $tmp = "";
             foreach ($data["adh_years"] as $adh_year) {
                 $tmp=$tmp.$adh_year.";";
             }
             $data["adh_years"] = $tmp;
+            $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adh = $this->Adhs->patchEntity($adh, $data);
             if ($this->Adhs->save($adh)) {
-                $this->Flash->success(__('The adh has been modified.'));
+                $this->Flash->success(__('L\'adhérent a été modifié.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('Unable to add the adh.'));
+                $this->Flash->error(__('Erreur : Impossible de modifier l\'adhérent.'));
                 return $this->redirect('/adhs/index');
             }
         }

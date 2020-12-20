@@ -49,6 +49,7 @@
         </td>
         <td class="icons">
             <a <?php echo 'href="/users/edit/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
+            <a <?php echo 'href="/users/reset_password/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">refresh</i></a>
             <a <?php echo 'href="/users/delete/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">delete</i></a>
         </td>
 

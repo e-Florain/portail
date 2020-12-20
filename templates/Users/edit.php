@@ -17,18 +17,6 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="password" id="password" type="password" class="validate">
-          <label for="password">Mot de passe </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s6">
-          <input name="password2" id="password2" type="password" class="validate">
-          <label for="password2">Mot de passe (confirmation)</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s6">
           <input name="email" id="email" type="email" <?php echo 'value="'.$user->email.'"'; ?> class="validate">
           <label for="email">Email</label>
         </div>

@@ -5,19 +5,19 @@
     <input name="id" id="id" type="hidden" class="validate">
       <div class="row">
         <div class="input-field col s2">
-          <input name="id" id="id" type="text" class="validate">
+          <input name="id" id="id" type="text" required class="validate">
           <label for="id">ID</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="name" id="name" type="text" class="validate">
+          <input name="name" id="name" type="text" required class="validate">
           <label for="name">Nom</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="activite" id="activite" type="text" class="validate">
+          <input name="activite" id="activite" type="text" required class="validate">
           <label for="activite">Activite</label>
         </div>
       </div>

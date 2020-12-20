@@ -42,8 +42,12 @@ $cakeDescription = 'Florain - Portail';
 <body>
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-  <li><a href="#!">Changer le mot de passe</a></li>
-  <li><a href="#!">two</a></li>
+  <li>
+    <?php
+      $session = $this->getRequest()->getSession();
+      echo '<a href="/users/reset_password/'.$session->read('User.id').'">Changer le mot de passe</a>';
+    ?>
+  </li>
   <li class="divider"></li>
   <li><a href="/users/logout">Se déconnecter</a></li>
 </ul>

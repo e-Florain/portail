@@ -4,6 +4,7 @@
 namespace App\Controller;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use Cake\I18n\FrozenTime;
 
 class AssociationsController extends AppController
 {
@@ -31,16 +32,20 @@ class AssociationsController extends AppController
     public function add()
     {
         if ($this->request->is('post')) {            
-            $asso = $this->Associations->newEmptyEntity();
-            $data = $this->request->getData();
-            $asso = $this->Associations->patchEntity($asso, $data);
-            if ($this->Associations->save($asso)) {
-                $this->Flash->success(__('The association has been saved.'));
-                return $this->redirect(['action' => 'add']);
+            //$asso = $this->Associations->newEmptyEntity();
+            //$data = $this->request->getData();
+            $asso = $this->Associations->newEntity($this->request->getData());
+            if ($asso->getErrors()) {
+                var_dump($asso->getErrors());
             } else {
-                $this->Flash->error(__('Unable to add the association.'));
-                return $this->redirect('/associations/index');
-            } 
+                if ($this->Associations->save($asso)) {
+                    $this->Flash->success(__('L\'association a été ajoutée.'));
+                    return $this->redirect('/associations/index');
+                } else {
+                    $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'association.'));
+                    //return $this->redirect('/adhs/index');
+                }
+            }
         }
     }
 
@@ -57,7 +62,7 @@ class AssociationsController extends AppController
             $asso = $this->Associations->patchEntity($asso, $data);
             if ($this->Associations->save($asso)) {
                 $this->Flash->success(__('The association has been modified.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect('/associations/index');
             } else {
                 $this->Flash->error(__('Unable to add the association.'));
                 return $this->redirect('/associations/index');
@@ -136,12 +141,19 @@ class AssociationsController extends AppController
 
     public function export()
     {
+        $now = FrozenTime::now();
+        $strfile = $now->format('Y-m-d').'_export_associations.csv';
         $assos = $this->Associations->find();
-        $file = new File('export.csv', true, 0644);
+        $file = new File($strfile, true, 0644);
         $exportCSV="";
 
         foreach($this->list_keys as $key=>$keyname) {
-            $exportCSV=$exportCSV.$key.",";
+            if ($i==(count($this->list_keys)-1)) {
+                $exportCSV=$exportCSV.$key;
+            } else {
+                $exportCSV=$exportCSV.$key.",";
+            }
+            $i++;
         }
         $exportCSV=$exportCSV."\n";
         $file->write($exportCSV);
@@ -155,7 +167,7 @@ class AssociationsController extends AppController
         
         $response = $this->response->withFile(
             $path = $file->path,
-            ['download' => true, 'name' => 'export.csv']
+            ['download' => true, 'name' => $strfile]
         );
         return $response;
     }

@@ -38,9 +38,11 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->findUser($data["email"]);
             if (!is_null($user)) {
+                //var_dump($user);
                 if (password_verify($data["password"], $user->password)) {
                     $session = $this->request->getSession();
                     $session->write('User.name', $user->firstname." ".$user->lastname);
+                    $session->write('User.id', $user->id);
                     $redirect = $this->request->getQuery('redirect', [
                         'controller' => 'Adhs',
                         'action' => 'index',
@@ -70,10 +72,10 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('L\'utilisateur a été ajouté.'));
                 return $this->redirect(['action' => 'add']);
             }
-            $this->Flash->error(__('Unable to add the user.'));
+            $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'utilisateur.'));
         }
         $this->set('user', $user);
     }
@@ -84,15 +86,23 @@ class UsersController extends AppController
         $this->set('list_roles', $this->list_roles);
         $this->set(compact('user'));
         if ($this->request->is('post')) {
-            $user = $this->Users->newEmptyEntity();
+            /*$user = $this->Users->newEmptyEntity();
             $data = $this->request->getData();
+            $user = $this->Users->patchEntity($user, $data);*/
+            $data = $this->request->getData();
+            $data["role"] = strtolower($data["role"]);
             $user = $this->Users->patchEntity($user, $data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been modified.'));
-                return $this->redirect(['action' => 'index']);
+            //$user = $this->Users->newEntity($data);
+            if ($user->getErrors()) {
+                var_dump($user->getErrors());
             } else {
-                $this->Flash->error(__('Unable to add the user.'));
-                return $this->redirect('/users/index');
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('L\'utilisateur a été modifié.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error(__('Erreur : Impossible de modifier l\'utilisateur.'));
+                    return $this->redirect('/users/index');
+                }
             }
         }
     }
@@ -101,7 +111,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id);
         $result = $this->Users->delete($user);
-        $this->Flash->success(__('The user has been deleted.'));
+        $this->Flash->success(__('L\'utilisateur a été effacé.'));
         return $this->redirect('/users/index');
     }
 
@@ -110,10 +120,23 @@ class UsersController extends AppController
         
     }
 
+    public function resetPassword($id)
+    {
+        $user = $this->Users->get($id);
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Le mot de passe a été changé.'));
+                return $this->redirect(['action' => 'add']);
+            }
+            $this->Flash->error(__('Erreur : Impossible de changer le mot de passe.'));
+        }
+    }
+
     public function findUser($email)
     {
         $user = $this->Users->find()
-            ->select(['firstname', 'lastname', 'email', 'password', 'role'])
+            ->select(['id', 'firstname', 'lastname', 'email', 'password', 'role'])
             ->where(['email' => $email])
             ->first();
         return $user;

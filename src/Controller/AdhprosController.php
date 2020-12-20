@@ -4,6 +4,7 @@
 namespace App\Controller;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use Cake\I18n\FrozenTime;
 
 class AdhprosController extends AppController
 {
@@ -57,6 +58,8 @@ class AdhprosController extends AppController
                 } else {
                     $data["newsletter"] = False;
                 }
+            } else {
+                $data["newsletter"] = False;
             }
             if (isset($data["invoice"])) {
                 if ($data["invoice"] == "on") {
@@ -64,6 +67,8 @@ class AdhprosController extends AppController
                 } else {
                     $data["invoice"] = False;
                 }
+            } else {
+                $data["invoice"] = False;
             }
             if (isset($data["annuaire"])) {
                 if ($data["annuaire"] == "on") {
@@ -71,6 +76,8 @@ class AdhprosController extends AppController
                 } else {
                     $data["annuaire"] = False;
                 }
+            } else {
+                $data["annuaire"] = False;
             }
             $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adh = $this->Adhpros->patchEntity($adhpro, $data);
@@ -94,8 +101,8 @@ class AdhprosController extends AppController
         $this->set('list_payment_type', $this->list_payment_type);
         //var_dump($adhpro);
         if ($this->request->is('post')) {
-            var_dump($this->request->getData());
-            $adhpro = $this->Adhpros->newEmptyEntity();
+            //var_dump($this->request->getData());
+            //$adhpro = $this->Adhpros->newEmptyEntity();
             $data = $this->request->getData();
             if (isset($data["newsletter"])) {
                 if ($data["newsletter"] == "on") {
@@ -103,6 +110,8 @@ class AdhprosController extends AppController
                 } else {
                     $data["newsletter"] = False;
                 }
+            } else {
+                $data["newsletter"] = False;
             }
             if (isset($data["invoice"])) {
                 if ($data["invoice"] == "on") {
@@ -110,6 +119,8 @@ class AdhprosController extends AppController
                 } else {
                     $data["invoice"] = False;
                 }
+            } else {
+                $data["invoice"] = False;
             }
             if (isset($data["annuaire"])) {
                 if ($data["annuaire"] == "on") {
@@ -117,11 +128,14 @@ class AdhprosController extends AppController
                 } else {
                     $data["annuaire"] = False;
                 }
+            } else {
+                $data["annuaire"] = False;
             }
+            $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adhpro = $this->Adhpros->patchEntity($adhpro, $data);
             if ($this->Adhpros->save($adhpro)) {
                 $this->Flash->success(__('L\'adhérent a été modifié.'));
-                return $this->redirect(['action' => 'add']);
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('Erreur : Impossible de modifier l\'adhérent.'));
                 return $this->redirect('/adhpros/index');
@@ -180,11 +194,18 @@ class AdhprosController extends AppController
     public function export()
     {
         $users = $this->Adhpros->find();
-        $file = new File('export.csv', true, 0644);
+        $now = FrozenTime::now();
+        $strfile = $now->format('Y-m-d').'_export_pros.csv';
+        $file = new File($strfile, true, 0644);
         $exportCSV="";
 
         foreach($this->list_keys as $key=>$keyname) {
-            $exportCSV=$exportCSV.$key.",";
+            if ($i==(count($this->list_keys)-1)) {
+                $exportCSV=$exportCSV.$key;
+            } else {
+                $exportCSV=$exportCSV.$key.",";
+            }
+            $i++;
         }
         $exportCSV=$exportCSV."\n";
         $file->write($exportCSV);
@@ -205,7 +226,7 @@ class AdhprosController extends AppController
         
         $response = $this->response->withFile(
             $path = $file->path,
-            ['download' => true, 'name' => 'export.csv']
+            ['download' => true, 'name' => $strfile]
         );
         return $response;
     }
