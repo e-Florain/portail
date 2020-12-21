@@ -1,6 +1,6 @@
 <!-- File: templates/Users/index.php -->
 <br>
-<a class="btn-floating btn-large waves-effect waves-light light-green" href="/users/add"><i class="material-icons">add</i></a>
+<a class="btn-floating btn-large waves-effect waves-light btn-pink" href="/users/add"><i class="material-icons">add</i></a>
 <h3>Utilisateurs</h3>
 <table class="striped responsive-table">
     <tr>
@@ -48,9 +48,9 @@
             <?= $user->role ?>
         </td>
         <td class="icons">
-            <a <?php echo 'href="/users/edit/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
-            <a <?php echo 'href="/users/reset_password/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">refresh</i></a>
-            <a <?php echo 'href="/users/delete/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">delete</i></a>
+            <a <?php echo 'href="/users/edit/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-green"><i class="material-icons">edit</i></a>
+            <a <?php echo 'href="/users/reset_password/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-blue"><i class="material-icons">refresh</i></a>
+            <a <?php echo 'href="/users/delete/'.$user->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-orange"><i class="material-icons">delete</i></a>
         </td>
 
     </tr>

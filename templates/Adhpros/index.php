@@ -20,8 +20,8 @@
     </div>
 </div>
 
-<a class="btn-floating btn-large waves-effect waves-light light-green" href="/adhpros/add"><i class="material-icons">add</i></a>
-<a class="btn-floating btn-large waves-effect waves-light light-green" href="/adhpros/importexport"><i class="material-icons">import_export</i></a>
+<a class="btn-floating btn-large waves-effect waves-light btn-pink" href="/adhpros/add"><i class="material-icons">add</i></a>
+<a class="btn-floating btn-large waves-effect waves-light btn-blue" href="/adhpros/importexport"><i class="material-icons">import_export</i></a>
 
 <h3>Adhérents Pro</h3>
 <table class="striped responsive-table">
@@ -104,7 +104,7 @@
     <?php foreach ($adhpros as $adhpro): ?>
     <tr>
         <td>
-            <?= $this->Html->link($adhpro->adh_id, ['action' => 'view', $adhpro->adh_id]) ?>
+            <?php echo $adhpro->adh_id; ?>
         </td>
         <td>
             <?php 
@@ -171,7 +171,8 @@
             ?>
         </td>
         <td class="icons">
-            <a <?php echo 'href="/adhpros/edit/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
+            <a <?php echo 'href="/adhpros/edit/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-green"><i class="material-icons">edit</i></a>
+            <a <?php echo 'href="/adhpros/delete/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-orange"><i class="material-icons">delete</i></a>
         </td>
 
     </tr>

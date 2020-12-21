@@ -24,7 +24,7 @@ class AdhsController extends AppController
         "newsletter" => "NL"
     );
 
-    public function index()
+    public function index($trash=false)
     {
         $this->loadComponent('Paginator');
         $this->loadModel('Associations');
@@ -32,10 +32,22 @@ class AdhsController extends AppController
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
         $sort = $this->request->getQuery('sort') ?? "ASC";
         //var_dump($sort);
-        $adhs = $this->Paginator->paginate($this->Adhs->find()->order([$order => $sort]));
+        if ($trash) {
+            $adhs = $this->Paginator->paginate($this->Adhs->find()->where(['deleted' => 1])->order([$order => $sort]));
+        } else {
+            $nbitems_trashed = count($this->Adhs->find()->where(['deleted' => 1])->all());
+            $adhs = $this->Paginator->paginate($this->Adhs->find()->where(['deleted' => 0])->order([$order => $sort]));
+        }
+        $this->set('nbitems_trashed', $nbitems_trashed);
         $this->set(compact('adhs'));
         $assos = $this->Associations->find();
         $this->set('assos', $assos);
+        if ($trash) {
+            $this->set('trash_view', true);
+        } else {
+            $this->set('trash_view', false);
+        }
+        
         //$this->Flash->success(__('The adh has been saved.'));
        // echo "true ".$order;
     }
@@ -123,6 +135,18 @@ class AdhsController extends AppController
                 $this->Flash->error(__('Erreur : Impossible de modifier l\'adhérent.'));
                 return $this->redirect('/adhs/index');
             }
+        }
+    }
+
+    public function delete($id) {
+        $adh = $this->Adhs->get($id);
+        $adh['deleted'] = 1;
+        if ($this->Adhs->save($adh)) {
+            $this->Flash->success(__('L\'adhérent a été effacé.'));
+            return $this->redirect('/adhs/index');
+        } else {
+            $this->Flash->error(__('Erreur : Impossible d\'effacer l\'adhérent.'));
+            return $this->redirect('/adhs/index');
         }
     }
 

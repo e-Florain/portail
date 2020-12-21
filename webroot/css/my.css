@@ -26,7 +26,8 @@
 
 .container {
     width: 100%;
-    max-width: 1600px;
+    max-width: 1800px;
+    font-family: FuturaLight;   
 }
 
 .page-footer {
@@ -47,6 +48,8 @@
 
 a.brand-logo {
     color: #70706f;
+    font-family: FreeStyleScript;
+    font-size: 3.1rem;
 }
 
 .tabs.tabs-transparent .tab a.active {
@@ -67,4 +70,53 @@ a.brand-logo {
 
 nav ul a {
     color: #70706f;
+}
+
+.btn-pink {
+    background-color: #e46b9d;
+}
+
+.btn-blue {
+    background-color: #54bcb4;
+}
+
+.btn-orange {
+    background-color: #f38e3c;
+}
+
+.btn-green {
+    background-color: #9bc43e;
+}
+
+.btn:hover, .btn-large:hover, .btn-small:hover {
+    background-color: #70706f;
+}
+
+h3 {
+    font-family: Steelfish;
+}
+
+input {
+    font-family: FuturaLight;
+}
+
+@font-face {
+    font-family: 'FreeStyleScript';
+    font-style: normal;
+    font-weight: normal;
+    src: local('FreeStyleScript'), url('/font/FREESCPT.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Steelfish';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Steelfish'), url('/font/Steelfish-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'FuturaLight';
+    font-style: normal;
+    font-weight: normal;
+    src: local('FuturaLight'), url('/font/Futura-Light.woff') format('woff');
 }

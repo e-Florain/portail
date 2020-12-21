@@ -1,8 +1,19 @@
 <!-- File: templates/Adhs/index.php -->
 <br>
-<a class="btn-floating btn-large waves-effect waves-light light-green" href="/adhs/add"><i class="material-icons">add</i></a>
-<a class="btn-floating btn-large waves-effect waves-light light-green" href="/adhs/importexport"><i class="material-icons">import_export</i></a>
+<a class="btn-floating btn-large waves-effect waves-light btn-pink" href="/adhs/add"><i class="material-icons">add</i></a>
+<a class="btn-floating btn-large waves-effect waves-light btn-blue" href="/adhs/importexport"><i class="material-icons">import_export</i></a>
 <h3>Adhérents</h3>
+<?php
+if ($trash_view) {
+?>
+    <a href="/adhs/index">x Fermer la corbeille</a>
+<?php
+} else {
+?>
+    <a href="/adhs/index/false">Corbeille (<?php echo $nbitems_trashed; ?>)</a>
+<?php
+}
+?>
 <table class="striped responsive-table">
     <tr>
         <th><?= $this->Html->link("Id", [
@@ -135,7 +146,8 @@
             ?>
         </td>
         <td class="icons">
-            <a <?php echo 'href="/adhs/edit/'.$adh->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
+            <a <?php echo 'href="/adhs/edit/'.$adh->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-green"><i class="material-icons">edit</i></a>
+            <a <?php echo 'href="/adhs/delete/'.$adh->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-orange"><i class="material-icons">delete</i></a>
         </td>
 
     </tr>
