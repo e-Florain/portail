@@ -21,7 +21,7 @@ class UsersTable extends Table
             ->notEmptyString('role', 'A role is required')
             ->add('role', 'inList', [
                 'rule' => ['inList', ['admin', 'root', 'user']],
-                'message' => 'Please enter a valid role'
+                'message' => 'Indiquez un rôle valide'
             ]);
     }
 }
