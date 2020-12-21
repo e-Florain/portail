@@ -59,7 +59,7 @@
           <select name="asso_id" >
             <option value="" disabled selected>Choisir</option>
               <?php foreach ($assos as $asso) {
-              echo '<option value="'.$asso['id'].'" >'.$asso['name'].'</option>';
+              echo '<option value="'.$asso['id'].'" >'.$asso['id']." - ".$asso['name'].'</option>';
               }
               ?>
           </select>

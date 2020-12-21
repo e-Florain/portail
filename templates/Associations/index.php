@@ -8,7 +8,7 @@
         <th><?= $this->Html->link("Id", [
             'controller' => 'associations',
             'action' => 'index',
-            '?' => ['orderby' => "id"]
+            '?' => ['orderby' => "asso_id"]
         ]); ?>
         </th>
         <th><?= $this->Html->link("Nom", [
@@ -32,7 +32,7 @@
     <?php foreach ($assos as $asso): ?>
     <tr>
         <td>
-            <?php echo $asso->id; ?>
+            <?php echo $asso->asso_id; ?>
         </td>
         <td>
             <?= $asso->name ?>

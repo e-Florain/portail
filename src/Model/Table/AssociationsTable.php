@@ -15,7 +15,7 @@ class AssociationsTable extends Table
 
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['id']), [
+        $rules->add($rules->isUnique(['asso_id']), [
             'errorField' => 'status',
             'message' => 'L\'id doit être unique'
         ]);

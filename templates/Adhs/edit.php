@@ -87,9 +87,9 @@
             <option value="" disabled >Choisir</option>
               <?php foreach ($assos as $asso) {
                 if ($adh->asso_id == $asso['id']) {
-                  echo '<option value="'.$asso['id'].'" selected>'.$asso['name'].'</option>';
+                  echo '<option value="'.$asso['id'].'" selected>'.$asso['asso_id']." - ".$asso['name'].'</option>';
                 } else {
-                  echo '<option value="'.$asso['id'].'" >'.$asso['name'].'</option>';
+                  echo '<option value="'.$asso['id'].'" >'.$asso['asso_id']." - ".$asso['name'].'</option>';
                 }
               }
             ?>
@@ -116,14 +116,14 @@
       <div class="row">
         <div class="input-field col s6">
           <input name="amount" id="amount" type="text" <?php echo 'value="'.$adh->amount.'"'; ?> class="validate">
-          <label for="amount">Montant</label>
+          <label for="amount">Montant (entre 10 et 50)</label>
         </div>
       </div>
       <p>
         &nbsp;<label>
         
             <input name="newsletter" id="newsletter" <?php if ($adh->newsletter) { echo "checked"; } ?> type="checkbox" />
-            <span>Ajout Liste</span>
+            <span>Ajout Newsletter</span>
         </label>
       </p>
     <button class="btn waves-effect waves-light" type="submit" name="action">Modifier

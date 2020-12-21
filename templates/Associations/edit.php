@@ -5,8 +5,8 @@
     <input name="id" id="id" <?php echo 'value="'.$asso->id.'"'; ?> type="hidden" class="validate">
       <div class="row">
         <div class="input-field col s2">
-          <input name="id" id="id" <?php echo 'value="'.$asso->id.'"'; ?> type="text" class="validate">
-          <label for="id">ID</label>
+          <input name="asso_id" id="asso_id" <?php echo 'value="'.$asso->asso_id.'"'; ?> type="text" class="validate">
+          <label for="asso_id">ID</label>
         </div>
       </div>
       <div class="row">

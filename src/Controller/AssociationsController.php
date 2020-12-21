@@ -9,7 +9,7 @@ use Cake\I18n\FrozenTime;
 class AssociationsController extends AppController
 {
     private $list_keys = array(
-        "id" => "Id",
+        "asso_id" => "Id",
         "name" => "Nom",
         "activite" => "Activité"
     );
@@ -61,10 +61,10 @@ class AssociationsController extends AppController
             //var_dump($data);
             $asso = $this->Associations->patchEntity($asso, $data);
             if ($this->Associations->save($asso)) {
-                $this->Flash->success(__('The association has been modified.'));
+                $this->Flash->success(__('L\'association a été modifiée.'));
                 return $this->redirect('/associations/index');
             } else {
-                $this->Flash->error(__('Unable to add the association.'));
+                $this->Flash->error(__('Erreur : Impossible de modifier l\'association.'));
                 return $this->redirect('/associations/index');
             }
         }
@@ -74,7 +74,7 @@ class AssociationsController extends AppController
     {
         $asso = $this->Associations->get($id);
         $result = $this->Associations->delete($asso);
-        $this->Flash->success(__('The association has been deleted.'));
+        $this->Flash->success(__('L\'association a été effacée.'));
         return $this->redirect('/associations/index');
     }
 
@@ -115,14 +115,14 @@ class AssociationsController extends AppController
                     if (count($keys) == count($datacsv)) {
                         $data = array_combine($keys, $datacsv); 
                         if ($data != FALSE) {
-                            $adh = $this->Adhs->newEmptyEntity();
-                            $adh = $this->Adhs->patchEntity($adh, $data);
+                            $asso = $this->Associations->newEmptyEntity();
+                            $asso = $this->Associations->patchEntity($asso, $data);
                             //var_dump($adh);
-                            if ($this->Adhs->save($adh)) {
+                            if ($this->Associations->save($asso)) {
                                 $data['imported'] = 1;
                                 $data['msgerr'] = '';
                             } else {
-                                $errors = $adh->getErrors()["status"];
+                                $errors = $asso->getErrors()["status"];
                                 $data['msgerr'] = array_shift($errors);
                                 $data['imported'] = 0;
                             }
@@ -146,7 +146,7 @@ class AssociationsController extends AppController
         $assos = $this->Associations->find();
         $file = new File($strfile, true, 0644);
         $exportCSV="";
-
+        $i=0;
         foreach($this->list_keys as $key=>$keyname) {
             if ($i==(count($this->list_keys)-1)) {
                 $exportCSV=$exportCSV.$key;

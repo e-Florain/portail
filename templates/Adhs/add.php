@@ -67,7 +67,7 @@
           <select name="asso_id" >
             <option value="" disabled selected>Choisir</option>
               <?php foreach ($assos as $asso) {
-              echo '<option value="'.$asso['id'].'" >'.$asso['name'].'</option>';
+              echo '<option value="'.$asso['id'].'" >'.$asso['asso_id']." - ".$asso['name'].'</option>';
               }
               ?>
           </select>
@@ -95,7 +95,7 @@
       <p>
         &nbsp;<label>
             <input name="newsletter" id="newsletter" type="checkbox" />
-            <span>Ajout Liste</span>
+            <span>Ajout Newsletter</span>
         </label>
       </p>
     <button class="btn waves-effect waves-light" required type="submit" name="action">Ajouter

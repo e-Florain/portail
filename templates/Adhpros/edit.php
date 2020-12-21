@@ -62,9 +62,9 @@
             <option value="" disabled >Choisir</option>
               <?php foreach ($assos as $asso) {
                 if ($adhpro->asso_id == $asso['id']) {
-                  echo '<option value="'.$asso['id'].'" selected>'.$asso['name'].'</option>';
+                  echo '<option value="'.$asso['id'].'" selected>'.$asso['id']." - ".$asso['name'].'</option>';
                 } else {
-                  echo '<option value="'.$asso['id'].'" >'.$asso['name'].'</option>';
+                  echo '<option value="'.$asso['id'].'" >'.$asso['id']." - ".$asso['name'].'</option>';
                 }
               }
             ?>

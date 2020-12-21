@@ -76,8 +76,10 @@ class AdhsController extends AppController
                 }
             }*/
             $tmp = "";
-            foreach ($data["adh_years"] as $adh_year) {
-                $tmp=$tmp.$adh_year.";";
+            if (isset($data["adh_years"])) {
+                foreach ($data["adh_years"] as $adh_year) {
+                    $tmp=$tmp.$adh_year.";";
+                }
             }
             var_dump($tmp);
             $data["adh_years"] = $tmp;
@@ -122,8 +124,10 @@ class AdhsController extends AppController
                 $data["newsletter"] = False;
             }
             $tmp = "";
-            foreach ($data["adh_years"] as $adh_year) {
-                $tmp=$tmp.$adh_year.";";
+            if (isset($data["adh_years"])) {
+                foreach ($data["adh_years"] as $adh_year) {
+                    $tmp=$tmp.$adh_year.";";
+                }
             }
             $data["adh_years"] = $tmp;
             $data["date_adh"] = $data["date_adh"]."00:00:00";
@@ -206,7 +210,8 @@ class AdhsController extends AppController
     {
         $now = FrozenTime::now();
         $strfile = $now->format('Y-m-d').'_export_particuliers.csv';
-        $users = $this->Adhs->find();
+        //$users = $this->Adhs->find();
+        $users = $this->Adhs->find()->where(['deleted' => 0])->all();
         $file = new File($strfile, true, 0644);
         $exportCSV="";
         $i=0;
