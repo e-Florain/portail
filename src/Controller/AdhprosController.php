@@ -28,7 +28,7 @@ class AdhprosController extends AppController
         "annuaire" => "Annuaire"
     );
 
-    public function index()
+    public function index($trasharg="trash:false")
     {
         $this->loadModel('Associations');
         $assos = $this->Associations->find();
@@ -37,9 +37,60 @@ class AdhprosController extends AppController
         $order = $this->request->getQuery('orderby') ?? "adh_id";
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
         $sort = $this->request->getQuery('sort') ?? "ASC";
-        //var_dump($sort);
-        $adhpros = $this->Paginator->paginate($this->Adhpros->find()->order([$order => $sort]));
+        $nbitems_trashed = count($this->Adhpros->find()->where(['deleted' => 1])->all());
+        $nbitems = count($this->Adhpros->find()->where(['deleted' => 0])->all());
+        if ($trasharg == "trash:true") {
+            $this->set('trash_view', true);
+            $adhpros = $this->Paginator->paginate($this->Adhpros->find()->where(['deleted' => 1])->order([$order => $sort]));
+        } else {
+            $this->set('trash_view', false);
+            $adhpros = $this->Paginator->paginate($this->Adhpros->find()->where(['deleted' => 0])->order([$order => $sort]));
+        }
+        $this->set('nbitems_trashed', $nbitems_trashed);
+        $this->set('nbitems', $nbitems);
         $this->set(compact('adhpros'));
+    }
+
+    public function indexAjax($trasharg="trash:false", $strarg="", $yearsarg="")
+    {
+        $str = explode(":", $strarg);
+        if (!isset($str[1])) {
+            $str[1] = "";
+        }
+        if ($trasharg == "trash:true") {
+            $filters = ['AND' => ['deleted' => 1]];
+        }
+        else {
+            $filters = ['AND' => ['deleted' => 0]];
+        }
+        $filters_str = ['OR' => [['orga_contact LIKE' => '%'.$str[1].'%'], [' orga_name LIKE' => '%'.$str[1].'%'], ['email LIKE' => '%'.$str[1].'%']]];
+        $yearstr = explode(":", $yearsarg);
+        if (!isset($yearstr[1])) {
+            $yearstr[1] = "";
+        } else {
+            $filters_years = array();
+            $list_years_adh = explode(";", $yearstr[1]);
+            foreach ($list_years_adh as $year) {
+                if ($year != "") {
+                    $filters_years['OR'][] = ['adh_years LIKE' => '%'.$year.'%'];
+                }
+            }
+        }
+        $filters_and['AND'][] = $filters_str;
+        $this->loadComponent('Paginator');
+        $this->loadModel('Associations');
+        $order = $this->request->getQuery('orderby') ?? "adh_id";
+        
+        $filters['AND'][] = $filters_years;
+        $filters['AND'][] = $filters_str;
+        //var_dump($filters);
+        $sort = $this->request->getQuery('sort') ?? "ASC";
+        $query = $this->Adhpros->find()->where($filters)->order([$order => $sort]);
+        $adhpros = $this->Paginator->paginate($query);
+        $this->set(compact('adhpros'));
+        $assos = $this->Associations->find();
+        $this->set('assos', $assos);
+        $this->viewBuilder()->setLayout('ajax');
     }
 
     public function add()

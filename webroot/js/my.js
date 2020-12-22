@@ -53,3 +53,49 @@ function auto(data_arr){
       minLength: 1
   });
 }
+
+function filter(controller) {
+  var reg = /\/trash\:(\w+)/;
+  var resultat = reg.test(window.location.href);
+  var url = "/"+controller+"/index_ajax/";
+  if (resultat) {
+    var trasharg = RegExp.$1;
+    url = url+"trash:"+trasharg; 
+  } else {
+    url = url+"trash:false"; 
+  }
+  var str = $("#filter_"+controller+"_text").val();
+  url = url+"/str:"+str;
+
+  url=url+"/years:";
+  $('.check'+controller+'Years').each(function(i, obj) {
+    if (this.checked) {
+      url=url+this.name+";";
+    }
+  });
+  //console.log(url);
+
+  $.get(url)
+    .done(function( data ) {
+      //console.log( "Data Loaded: " + data );
+      $("#results").html(data);
+      //window.location.href = "index.php";
+  });
+}
+
+
+$("#filter_Adhs_text").keyup(function() {
+  filter("Adhs");
+});
+
+$('.checkAdhsYears:checkbox').on('change', function() {
+  filter("Adhs");
+});
+
+$("#filter_Adhpros_text").keyup(function() {
+  filter("Adhpros");
+});
+
+$('.checkAdhprosYears:checkbox').on('change', function() {
+  filter("Adhpros");
+});

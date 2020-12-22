@@ -1,74 +1,3 @@
-<!-- File: templates/Adhs/index.php -->
-<br>
-<a class="btn-floating btn-large waves-effect waves-light btn-pink" href="/adhs/add"><i class="material-icons">add</i></a>
-<a class="btn-floating btn-large waves-effect waves-light btn-blue" href="/adhs/importexport"><i class="material-icons">import_export</i></a>
-<h3>
-    Adhérents 
-    <?php if ($trash_view) { 
-            echo "effacés";
-            echo "(".$nbitems_trashed.")";
-        } else {
-            echo "(".$nbitems.")";    
-        }
-    ?>
-</h3>
-<?php
-if ($trash_view) {
-?>
-    <a href="/adhs/index">x Fermer la corbeille</a>
-<?php
-} else {
-?>
-    <a href="/adhs/index/trash:true">Corbeille (<?php echo $nbitems_trashed; ?>)</a>
-<?php
-}
-?>
-<form class="col s12">
-    <div class="row">
-        <div class="input-field col s6">
-            <i class="material-icons prefix">search</i>
-            <input type="text" id="filter_Adhs_text"></textarea>
-            <label for="icon_prefix2"></label>
-        </div>
-        <?php
-        $tmp = true;
-        if (date("W")>=44){
-            echo '<div class="input-field col s1">';
-            echo '<label>';
-            echo '<input class="checkAdhsYears" id="'.(date("Y")+1).'" name="'.(date("Y")+1).'" type="checkbox" />';
-            echo '<span>'.(date("Y")+1).'</span>';
-            echo '</label>';
-            echo '</div>';
-            //echo '<option value="'.(date("Y")+1).'">'.(date("Y")+1).'</option>';
-            $tmp=false;
-        }
-        echo '<div class="input-field col s1">';
-        echo '<label>';
-        echo '<input class="checkAdhsYears" id="'.(date("Y")).'" name="'.(date("Y")).'" type="checkbox" />';
-        echo '<span>'.(date("Y")).'</span>';
-        echo '</label>';
-        echo '</div>';
-
-        echo '<div class="input-field col s1">';
-        echo '<label>';
-        echo '<input class="checkAdhsYears" id="'.(date("Y")-1).'" name="'.(date("Y")-1).'" type="checkbox" />';
-        echo '<span>'.(date("Y")-1).'</span>';
-        echo '</label>';
-        echo '</div>';
-
-        if ($tmp) {
-            echo '<div class="input-field col s1">';
-            echo '<label>';
-            echo '<input class="checkAdhsYears" id="'.(date("Y")-2).'" name="'.(date("Y")-2).'" type="checkbox" />';
-            echo '<span>'.(date("Y")-2).'</span>';
-            echo '</label>';
-            echo '</div>';
-            //echo '<option value="'.(date("Y")-2).'">'.(date("Y")-2).'</option>';
-        }
-        ?>
-    </div>
-</form>
-<div id="results">
 <table class="striped responsive-table">
     <tr>
         <th><?= $this->Html->link("Id", [
@@ -151,7 +80,7 @@ if ($trash_view) {
     <?php foreach ($adhs as $adh): ?>
     <tr>
         <td>
-            <?= $adh->adh_id ?>
+            <?= $this->Html->link($adh->adh_id, ['action' => 'view', $adh->adh_id]) ?>
         </td>
         <td>
             <?php 
@@ -208,4 +137,3 @@ if ($trash_view) {
     </tr>
     <?php endforeach; ?>
 </table>
-</div>

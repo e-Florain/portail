@@ -24,7 +24,7 @@ class AdhsController extends AppController
         "newsletter" => "NL"
     );
 
-    public function index($trash=false)
+    public function index($trasharg="trash:false")
     {
         $this->loadComponent('Paginator');
         $this->loadModel('Associations');
@@ -32,24 +32,65 @@ class AdhsController extends AppController
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
         $sort = $this->request->getQuery('sort') ?? "ASC";
         //var_dump($sort);
-        if ($trash) {
+        $nbitems_trashed = count($this->Adhs->find()->where(['deleted' => 1])->all());
+        $nbitems = count($this->Adhs->find()->where(['deleted' => 0])->all());
+        if ($trasharg == "trash:true") {
+            $this->set('trash_view', true);
             $adhs = $this->Paginator->paginate($this->Adhs->find()->where(['deleted' => 1])->order([$order => $sort]));
         } else {
-            $nbitems_trashed = count($this->Adhs->find()->where(['deleted' => 1])->all());
+            $this->set('trash_view', false);
             $adhs = $this->Paginator->paginate($this->Adhs->find()->where(['deleted' => 0])->order([$order => $sort]));
         }
         $this->set('nbitems_trashed', $nbitems_trashed);
+        $this->set('nbitems', $nbitems);
         $this->set(compact('adhs'));
         $assos = $this->Associations->find();
         $this->set('assos', $assos);
-        if ($trash) {
-            $this->set('trash_view', true);
-        } else {
-            $this->set('trash_view', false);
-        }
         
         //$this->Flash->success(__('The adh has been saved.'));
        // echo "true ".$order;
+    }
+
+    public function indexAjax($trasharg="trash:false", $strarg="", $yearsarg="")
+    {
+        $str = explode(":", $strarg);
+        if (!isset($str[1])) {
+            $str[1] = "";
+        }
+        if ($trasharg == "trash:true") {
+            $filters = ['AND' => ['deleted' => 1]];
+        }
+        else {
+            $filters = ['AND' => ['deleted' => 0]];
+        }
+        $filters_str = ['OR' => [['firstname LIKE' => '%'.$str[1].'%'], ['lastname LIKE' => '%'.$str[1].'%'], ['email LIKE' => '%'.$str[1].'%']]];
+        $yearstr = explode(":", $yearsarg);
+        if (!isset($yearstr[1])) {
+            $yearstr[1] = "";
+        } else {
+            $filters_years = array();
+            $list_years_adh = explode(";", $yearstr[1]);
+            foreach ($list_years_adh as $year) {
+                if ($year != "") {
+                    $filters_years['OR'][] = ['adh_years LIKE' => '%'.$year.'%'];
+                }
+            }
+        }
+        $filters_and['AND'][] = $filters_str;
+        $this->loadComponent('Paginator');
+        $this->loadModel('Associations');
+        $order = $this->request->getQuery('orderby') ?? "adh_id";
+        
+        $filters['AND'][] = $filters_years;
+        $filters['AND'][] = $filters_str;
+        //var_dump($filters);
+        $sort = $this->request->getQuery('sort') ?? "ASC";
+        $query = $this->Adhs->find()->where($filters)->order([$order => $sort]);
+        $adhs = $this->Paginator->paginate($query);
+        $this->set(compact('adhs'));
+        $assos = $this->Associations->find();
+        $this->set('assos', $assos);
+        $this->viewBuilder()->setLayout('ajax');
     }
 
     public function add()
