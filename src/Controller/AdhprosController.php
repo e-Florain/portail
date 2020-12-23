@@ -20,7 +20,6 @@ class AdhprosController extends AppController
         "postcode" => "CP",
         "city" => "Ville",
         "phonenumber" => "Tel",
-        "asso" => "Asso",
         "amount" => "Montant",
         "payment_type" => "Paiement",
         "invoice" => "Facture",
@@ -30,9 +29,6 @@ class AdhprosController extends AppController
 
     public function index($trasharg="trash:false")
     {
-        $this->loadModel('Associations');
-        $assos = $this->Associations->find();
-        $this->set('assos', $assos);
         $this->loadComponent('Paginator');
         $order = $this->request->getQuery('orderby') ?? "adh_id";
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
@@ -78,7 +74,6 @@ class AdhprosController extends AppController
         }
         $filters_and['AND'][] = $filters_str;
         $this->loadComponent('Paginator');
-        $this->loadModel('Associations');
         $order = $this->request->getQuery('orderby') ?? "adh_id";
         
         $filters['AND'][] = $filters_years;
@@ -88,16 +83,11 @@ class AdhprosController extends AppController
         $query = $this->Adhpros->find()->where($filters)->order([$order => $sort]);
         $adhpros = $this->Paginator->paginate($query);
         $this->set(compact('adhpros'));
-        $assos = $this->Associations->find();
-        $this->set('assos', $assos);
         $this->viewBuilder()->setLayout('ajax');
     }
 
     public function add()
     {
-        $this->loadModel('Associations');
-        $assos = $this->Associations->find();
-        $this->set('assos', $assos);
         $this->set('list_payment_type', $this->list_payment_type);
         if ($this->request->is('post')) {            
             $adhpro = $this->Adhpros->newEmptyEntity();
@@ -144,9 +134,6 @@ class AdhprosController extends AppController
 
     public function edit($id)
     {
-        $this->loadModel('Associations');
-        $assos = $this->Associations->find();
-        $this->set('assos', $assos);
         $adhpro = $this->Adhpros->get($id);
         $this->set(compact('adhpro'));
         $this->set('list_payment_type', $this->list_payment_type);
@@ -237,6 +224,7 @@ class AdhprosController extends AppController
                         $data = array_combine($keys, $datacsv); 
                         if ($data != FALSE) {
                             $adhpro = $this->Adhpros->newEmptyEntity();
+                            $data["date_adh"] = $data["date_adh"]."00:00:00";
                             $adhpro = $this->Adhpros->patchEntity($adhpro, $data);
                             //var_dump($adhpro);
                             if ($this->Adhpros->save($adhpro)) {
@@ -267,7 +255,7 @@ class AdhprosController extends AppController
         $strfile = $now->format('Y-m-d').'_export_pros.csv';
         $file = new File($strfile, true, 0644);
         $exportCSV="";
-
+        $i=0;
         foreach($this->list_keys as $key=>$keyname) {
             if ($i==(count($this->list_keys)-1)) {
                 $exportCSV=$exportCSV.$key;
@@ -286,7 +274,7 @@ class AdhprosController extends AppController
             } else {
                 $datestr="";
             }
-            $infos=$user->adh_id.",".$datestr.",".$user->orga_name.",".$user->orga_contact.",".$user->email.",".$user->address.",".$user->postcode.",".$user->city.",".$user->phonenumber.",".$user->asso.",".$user->amount.",".$user->payment_type.",".$user->invoice.",".$user->newsletter.",".$user->annuaire."\n";
+            $infos=$user->adh_id.",".$datestr.",".$user->orga_name.",".$user->orga_contact.",".$user->email.",".$user->address.",".$user->postcode.",".$user->city.",".$user->phonenumber.",".$user->amount.",".$user->payment_type.",".$user->invoice.",".$user->newsletter.",".$user->annuaire."\n";
             $exportCSV=$exportCSV.$infos;
             $file->append($infos);
         }

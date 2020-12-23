@@ -115,12 +115,6 @@ if ($trash_view) {
             '?' => ['orderby' => "city"]
         ]); ?>
         </th>
-        <th><?= $this->Html->link("Asso", [
-            'controller' => 'adhpros',
-            'action' => 'index',
-            '?' => ['orderby' => "asso_id"]
-        ]); ?>
-        </th>
         <th><?= $this->Html->link("Paiement", [
             'controller' => 'adhpros',
             'action' => 'index',
@@ -178,15 +172,6 @@ if ($trash_view) {
         </td>
         <td>
             <?= $adhpro->city ?>
-        </td>
-        <td>
-            <?php
-            foreach ($assos as $asso) {
-                if ($asso->id == $adhpro->asso_id) {
-                    echo $asso->name;
-                }
-            } 
-            ?>
         </td>
         <td>
             <?= $adhpro->payment_type ?>

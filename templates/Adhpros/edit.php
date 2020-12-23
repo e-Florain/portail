@@ -55,23 +55,6 @@
           <label for="city">Ville</label>
         </div>
       </div>
-      
-      <div class="row">
-        <div class="input-field col s6">
-          <select name="asso_id" >
-            <option value="" disabled >Choisir</option>
-              <?php foreach ($assos as $asso) {
-                if ($adhpro->asso_id == $asso['id']) {
-                  echo '<option value="'.$asso['id'].'" selected>'.$asso['id']." - ".$asso['name'].'</option>';
-                } else {
-                  echo '<option value="'.$asso['id'].'" >'.$asso['id']." - ".$asso['name'].'</option>';
-                }
-              }
-            ?>
-          </select>
-          <label for="asso">Association</label>
-        </div>
-      </div>
       <div class="row">
         <div class="input-field col s6">
             <select name="payment_type" >

@@ -53,18 +53,6 @@
           <label for="city">Ville</label>
         </div>
       </div>
-      
-      <div class="row">
-        <div class="input-field col s6">
-          <select name="asso_id" >
-            <option value="" disabled selected>Choisir</option>
-              <?php foreach ($assos as $asso) {
-              echo '<option value="'.$asso['id'].'" >'.$asso['id']." - ".$asso['name'].'</option>';
-              }
-              ?>
-          </select>
-        </div>
-      </div>
       <div class="row">
         <div class="input-field col s6">
             <select name="payment_type" >
