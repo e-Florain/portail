@@ -194,6 +194,24 @@ class AdhprosController extends AppController
         }
     }
 
+    public function delete($id) {
+        $adhpro = $this->Adhpros->get($id);
+        if ($adhpro['deleted'] == 1) {
+            $result = $this->Adhpros->delete($adhpro);
+            $this->Flash->success(__('L\'adhérent a été effacé.'));
+            return $this->redirect('/adhpros/index/trash:true');
+        } else {
+            $adhpro['deleted'] = 1;
+            if ($this->Adhpros->save($adhpro)) {
+                $this->Flash->success(__('L\'adhérent a été effacé.'));
+                return $this->redirect('/adhpros/index');
+            } else {
+                $this->Flash->error(__('Erreur : Impossible d\'effacer l\'adhérent.'));
+                return $this->redirect('/adhpros/index');
+            }
+        }
+    }
+
     public function importexport()
     {
 

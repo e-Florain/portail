@@ -185,13 +185,19 @@ class AdhsController extends AppController
 
     public function delete($id) {
         $adh = $this->Adhs->get($id);
-        $adh['deleted'] = 1;
-        if ($this->Adhs->save($adh)) {
+        if ($adh['deleted'] == 1) {
+            $result = $this->Adhs->delete($adh);
             $this->Flash->success(__('L\'adhérent a été effacé.'));
-            return $this->redirect('/adhs/index');
+            return $this->redirect('/adhs/index/trash:true');
         } else {
-            $this->Flash->error(__('Erreur : Impossible d\'effacer l\'adhérent.'));
-            return $this->redirect('/adhs/index');
+            $adh['deleted'] = 1;
+            if ($this->Adhs->save($adh)) {
+                $this->Flash->success(__('L\'adhérent a été effacé.'));
+                return $this->redirect('/adhs/index');
+            } else {
+                $this->Flash->error(__('Erreur : Impossible d\'effacer l\'adhérent.'));
+                return $this->redirect('/adhs/index');
+            }
         }
     }
 
