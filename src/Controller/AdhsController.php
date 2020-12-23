@@ -18,7 +18,7 @@ class AdhsController extends AppController
         "email" => "Email",
         "city" => "Ville",
         "phonenumber" => "Tel",
-        "asso" => "Asso",
+        "asso_id" => "Asso",
         "amount" => "Montant",
         "payment_type" => "Paiement",
         "newsletter" => "NL"
@@ -213,6 +213,10 @@ class AdhsController extends AppController
             $data = $this->request->getData()["uploadfile"];
             
             if(!empty($data)){
+                $this->loadModel('Associations');
+                $assos = $this->Associations->find();
+                $datas = $assos->toArray();
+                $assos = array_column($datas, 'id', 'asso_id');
                 $fileName = $data->getClientFilename();
                 //var_dump($fileName);
                 $stream = $data->getStream();
@@ -230,8 +234,9 @@ class AdhsController extends AppController
                         $data = array_combine($keys, $datacsv); 
                         if ($data != FALSE) {
                             $adh = $this->Adhs->newEmptyEntity();
+                            $data["date_adh"] = $data["date_adh"]."00:00:00";
+                            $data["asso_id"] = $assos[$data["asso_id"]];
                             $adh = $this->Adhs->patchEntity($adh, $data);
-                            //var_dump($adh);
                             if ($this->Adhs->save($adh)) {
                                 $data['imported'] = 1;
                                 $data['msgerr'] = '';
@@ -255,9 +260,14 @@ class AdhsController extends AppController
 
     public function export()
     {
+        $this->loadModel('Associations');
+        $assos = $this->Associations->find();
+        $datas = $assos->toArray();
+        $assos = array_column($datas, 'asso_id', 'id');
+        //var_dump($assos);
+        
         $now = FrozenTime::now();
         $strfile = $now->format('Y-m-d').'_export_particuliers.csv';
-        //$users = $this->Adhs->find();
         $users = $this->Adhs->find()->where(['deleted' => 0])->all();
         $file = new File($strfile, true, 0644);
         $exportCSV="";
@@ -278,7 +288,7 @@ class AdhsController extends AppController
             } else {
                 $datestr="";
             }
-            $infos=$user->adh_id.",".$user->adh_years.",".$datestr.",".$user->lastname.",".$user->firstname.",".$user->email.",".$user->city.",".$user->phonenumber.",".$user->asso.",".$user->amount.",".$user->payment_type.",".$user->newsletter."\n";
+            $infos=$user->adh_id.",".$user->adh_years.",".$datestr.",".$user->lastname.",".$user->firstname.",".$user->email.",".$user->city.",".$user->phonenumber.",".$assos[$user->asso_id].",".$user->amount.",".$user->payment_type.",".$user->newsletter."\n";
             $exportCSV=$exportCSV.$infos;
             $file->append($infos);
         }

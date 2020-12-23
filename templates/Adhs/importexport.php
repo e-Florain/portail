@@ -1,5 +1,6 @@
-<h4>Import<h4>
+<h4>Import</h4>
 <div class="row">
+    <a href="/templates_importexport/export_particuliers.csv">export_particuliers.csv</a>
     <form id="importadh" class="col s12" action="/adhs/import" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="input-field file-field col s6">
