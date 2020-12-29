@@ -89,6 +89,12 @@ $cakeDescription = 'Florain - Portail';
         }
         ?>
         href="/associations/index">Associations</a></li>
+        <li class="tab"><a  
+        <?php  if ($this->request->getParam('controller') == "Cyclos" ) {
+            echo 'class="active"';
+        }
+        ?>
+        href="/cyclos/index">Cyclos</a></li>
       </ul>
     </div>
   </nav>

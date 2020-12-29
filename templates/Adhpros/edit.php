@@ -79,6 +79,12 @@
       </div>
       <p>
         &nbsp;<label>
+            <input name="cyclos_account" id="cyclos_account" <?php if ($adhpro->cyclos_account) { echo "checked"; } ?> type="checkbox" />
+            <span>Compte Cyclos</span>
+        </label>
+      </p>
+      <p>
+        &nbsp;<label>
             <input name="newsletter" id="newsletter" <?php if ($adhpro->newsletter) { echo "checked"; } ?> type="checkbox" />
             <span>Ajout Liste</span>
         </label>

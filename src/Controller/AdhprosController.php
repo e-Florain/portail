@@ -22,6 +22,7 @@ class AdhprosController extends AppController
         "phonenumber" => "Tel",
         "amount" => "Montant",
         "payment_type" => "Paiement",
+        "account_cyclos" => "Cyclos",
         "invoice" => "Facture",
         "newsletter" => "NL",
         "annuaire" => "Annuaire"

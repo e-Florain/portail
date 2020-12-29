@@ -73,6 +73,12 @@
       </div>
       <p>
         &nbsp;<label>
+            <input name="account_cyclos" id="account_cyclos" type="checkbox" />
+            <span>Compte Cyclos</span>
+        </label>
+      </p>
+      <p>
+        &nbsp;<label>
             <input name="newsletter" id="newsletter" type="checkbox" />
             <span>Ajout Liste</span>
         </label>
