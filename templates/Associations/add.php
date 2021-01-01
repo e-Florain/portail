@@ -6,8 +6,8 @@
     <input name="id" id="id" type="hidden" class="validate">
       <div class="row">
         <div class="input-field col s2">
-          <input name="id" id="id" type="text" required class="validate">
-          <label for="id">ID</label>
+          <input name="asso_id" id="asso_id" type="text" required class="validate">
+          <label for="asso_id">ID</label>
         </div>
       </div>
       <div class="row">

@@ -66,6 +66,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/adhs', ['controller' => 'Adhs', 'action' => 'index']);
     $builder->connect('/adhpros', ['controller' => 'Adhpros', 'action' => 'index']);
     $builder->connect('/users', ['controller' => 'Users', 'action' => 'index']);
+    $builder->connect('/associations', ['controller' => 'Associations', 'action' => 'index']);
     /*
      * ...and connect the rest of 'Pages' controller's URLs.
      */
