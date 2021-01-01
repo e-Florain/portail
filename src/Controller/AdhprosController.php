@@ -200,6 +200,18 @@ class AdhprosController extends AppController
         }
     }
 
+    public function restore($id)
+    {
+        $adhpro = $this->Adhpros->get($id);
+        if ($adhpro['deleted'] == 1) {
+            $adhpro['deleted'] = 0;
+            if ($this->Adhpros->save($adhpro)) {
+                $this->Flash->success(__('L\'adhérent a été restauré.'));
+                return $this->redirect('/adhpros/index');
+            }
+        }
+    }
+
     public function importexport()
     {
 

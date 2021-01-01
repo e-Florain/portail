@@ -216,6 +216,9 @@ if ($trash_view) {
         <td class="icons">
             <a <?php echo 'href="/adhpros/edit/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-green"><i class="material-icons">edit</i></a>
             <a <?php echo 'href="/adhpros/delete/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-orange"><i class="material-icons">delete</i></a>
+            <?php if ($trash_view): ?>
+            <a <?php echo 'href="/adhpros/restore/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-orange"><i class="material-icons">restore_from_trash</i></a>
+            <?php endif; ?>
         </td>
 
     </tr>

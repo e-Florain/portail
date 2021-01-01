@@ -96,7 +96,7 @@ class AdhsController extends AppController
     public function add()
     {
         $this->loadModel('Associations');
-        $assos = $this->Associations->find();
+        $assos = $this->Associations->find()->order(['asso_id' => 'ASC']);
         $this->set('assos', $assos);
         $this->set('list_payment_type', $this->list_payment_type);
         if ($this->request->is('post')) {            
@@ -144,7 +144,7 @@ class AdhsController extends AppController
     public function edit($id)
     {
         $this->loadModel('Associations');
-        $assos = $this->Associations->find();
+        $assos = $this->Associations->find()->order(['asso_id' => 'ASC']);
         $this->set('assos', $assos);
         $adh = $this->Adhs->get($id);
         //var_dump($adh);
@@ -183,7 +183,8 @@ class AdhsController extends AppController
         }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $adh = $this->Adhs->get($id);
         if ($adh['deleted'] == 1) {
             $result = $this->Adhs->delete($adh);
@@ -196,6 +197,18 @@ class AdhsController extends AppController
                 return $this->redirect('/adhs/index');
             } else {
                 $this->Flash->error(__('Erreur : Impossible d\'effacer l\'adhérent.'));
+                return $this->redirect('/adhs/index');
+            }
+        }
+    }
+
+    public function restore($id)
+    {
+        $adh = $this->Adhs->get($id);
+        if ($adh['deleted'] == 1) {
+            $adh['deleted'] = 0;
+            if ($this->Adhs->save($adh)) {
+                $this->Flash->success(__('L\'adhérent a été restauré.'));
                 return $this->redirect('/adhs/index');
             }
         }
