@@ -3,7 +3,7 @@
 <a class="btn-floating btn-large waves-effect waves-light btn-pink" href="/adhs/add"><i class="material-icons">add</i></a>
 <a class="btn-floating btn-large waves-effect waves-light btn-blue" href="/adhs/importexport"><i class="material-icons">import_export</i></a>
 <h3>
-    Adhérents 
+    <div id='nbadhs'>Adhérents 
     <?php if ($trash_view) { 
             echo "effacés";
             echo "(".$nbitems_trashed.")";
@@ -11,6 +11,7 @@
             echo "(".$nbitems.")";    
         }
     ?>
+    </div>
 </h3>
 <?php
 if ($trash_view) {

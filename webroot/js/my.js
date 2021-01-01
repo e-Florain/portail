@@ -78,7 +78,21 @@ function filter(controller) {
   $.get(url)
     .done(function( data ) {
       //console.log( "Data Loaded: " + data );
-      $("#results").html(data);
+      var reg = /(Adhérents[ pros]*);(true|false);(\d+);(.*)/s;
+      //console.log(data)
+      var resultat = reg.test(data);
+      console.log(resultat);
+      var strhtml = "";
+      if (RegExp.$2 == "false") {
+        strhtml = RegExp.$1+" ("+RegExp.$3+")";
+      }
+      if (RegExp.$2 == "true") {
+        strhtml = RegExp.$1+" effacés ("+RegExp.$3+")";
+      }
+      var strhtml2=RegExp.$4;
+      //console.log(strhtml2);
+      $("#nbadhs").html(strhtml);
+      $("#results").html(strhtml2);
       //window.location.href = "index.php";
   });
 }

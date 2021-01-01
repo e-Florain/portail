@@ -32,8 +32,8 @@ class AdhsController extends AppController
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
         $sort = $this->request->getQuery('sort') ?? "ASC";
         //var_dump($sort);
-        $nbitems_trashed = count($this->Adhs->find()->where(['deleted' => 1])->all());
-        $nbitems = count($this->Adhs->find()->where(['deleted' => 0])->all());
+        $nbitems_trashed = $this->Adhs->find()->where(['deleted' => 1])->all()->count();
+        $nbitems = $this->Adhs->find()->where(['deleted' => 0])->all()->count();
         if ($trasharg == "trash:true") {
             $this->set('trash_view', true);
             $adhs = $this->Paginator->paginate($this->Adhs->find()->where(['deleted' => 1])->order([$order => $sort]));
@@ -57,10 +57,13 @@ class AdhsController extends AppController
         if (!isset($str[1])) {
             $str[1] = "";
         }
+        $this->set('trash_view', "false");
         if ($trasharg == "trash:true") {
+            $this->set('trash_view', "true");
             $filters = ['AND' => ['deleted' => 1]];
         }
         else {
+            $this->set('trash_view', "false");
             $filters = ['AND' => ['deleted' => 0]];
         }
         $filters_str = ['OR' => [['firstname LIKE' => '%'.$str[1].'%'], ['lastname LIKE' => '%'.$str[1].'%'], ['email LIKE' => '%'.$str[1].'%']]];
@@ -86,6 +89,8 @@ class AdhsController extends AppController
         //var_dump($filters);
         $sort = $this->request->getQuery('sort') ?? "ASC";
         $query = $this->Adhs->find()->where($filters)->order([$order => $sort]);
+        $nbitems = $this->Adhs->find()->where($filters)->order([$order => $sort])->count();
+        $this->set('nbitems', $nbitems);
         $adhs = $this->Paginator->paginate($query);
         $this->set(compact('adhs'));
         $assos = $this->Associations->find();

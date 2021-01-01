@@ -1,3 +1,4 @@
+Adhérents;<?php echo $trash_view.";".$nbitems; ?>;
 <table class="striped responsive-table">
     <tr>
         <th><?= $this->Html->link("Id", [

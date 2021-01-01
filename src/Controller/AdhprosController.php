@@ -34,8 +34,8 @@ class AdhprosController extends AppController
         $order = $this->request->getQuery('orderby') ?? "adh_id";
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
         $sort = $this->request->getQuery('sort') ?? "ASC";
-        $nbitems_trashed = count($this->Adhpros->find()->where(['deleted' => 1])->all());
-        $nbitems = count($this->Adhpros->find()->where(['deleted' => 0])->all());
+        $nbitems_trashed = $this->Adhpros->find()->where(['deleted' => 1])->all()->count();
+        $nbitems = $this->Adhpros->find()->where(['deleted' => 0])->all()->count();
         if ($trasharg == "trash:true") {
             $this->set('trash_view', true);
             $adhpros = $this->Paginator->paginate($this->Adhpros->find()->where(['deleted' => 1])->order([$order => $sort]));
@@ -54,10 +54,13 @@ class AdhprosController extends AppController
         if (!isset($str[1])) {
             $str[1] = "";
         }
+        $this->set('trash_view', "false");
         if ($trasharg == "trash:true") {
+            $this->set('trash_view', "true");
             $filters = ['AND' => ['deleted' => 1]];
         }
         else {
+            $this->set('trash_view', "false");
             $filters = ['AND' => ['deleted' => 0]];
         }
         $filters_str = ['OR' => [['orga_contact LIKE' => '%'.$str[1].'%'], [' orga_name LIKE' => '%'.$str[1].'%'], ['email LIKE' => '%'.$str[1].'%']]];
@@ -82,6 +85,8 @@ class AdhprosController extends AppController
         //var_dump($filters);
         $sort = $this->request->getQuery('sort') ?? "ASC";
         $query = $this->Adhpros->find()->where($filters)->order([$order => $sort]);
+        $nbitems = $this->Adhpros->find()->where($filters)->order([$order => $sort])->count();
+        $this->set('nbitems', $nbitems);
         $adhpros = $this->Paginator->paginate($query);
         $this->set(compact('adhpros'));
         $this->viewBuilder()->setLayout('ajax');
