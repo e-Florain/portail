@@ -2,7 +2,6 @@
 <h3>Modifier un utilisateur</h3>
   <div class="row">
     <?php echo $this->Form->create(); ?>
-    <form class="col s12" methode="post" action="/users/edit">
       <div class="row">
         <div class="input-field col s6">
           <input name="firstname" id="first_name" type="text" <?php echo 'value="'.$user->firstname.'"'; ?> class="validate">

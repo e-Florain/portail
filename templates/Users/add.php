@@ -2,7 +2,6 @@
 <h3>Ajouter un utilisateur</h3>
   <div class="row">
     <?php echo $this->Form->create(); ?>
-    <form class="col s12" methode="post" action="/users/add">
       <div class="row">
         <div class="input-field col s6">
           <input name="firstname" id="first_name" type="text" class="validate">

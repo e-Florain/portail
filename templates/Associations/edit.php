@@ -1,7 +1,6 @@
 <br>
   <div class="row">
     <?php echo $this->Form->create(); ?>
-    <form class="col s12" methode="post" action="/associations/edit">
     <input name="id" id="id" <?php echo 'value="'.$asso->id.'"'; ?> type="hidden" class="validate">
       <div class="row">
         <div class="input-field col s2">

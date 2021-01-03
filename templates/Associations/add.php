@@ -2,7 +2,6 @@
   <h3>Ajouter une association</h3>
   <div class="row">
     <?php echo $this->Form->create(); ?>
-    <form class="col s12" methode="post" action="/associations/add">
     <input name="id" id="id" type="hidden" class="validate">
       <div class="row">
         <div class="input-field col s2">

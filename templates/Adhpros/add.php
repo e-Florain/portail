@@ -2,7 +2,6 @@
 <h3>Ajouter un adhérent pro</h3>
   <div class="row">
     <?php echo $this->Form->create(); ?>
-    <form class="col s12" methode="post" action="/adhpros/add">
       <div class="row">
         <div class="input-field col s2">
           <input name="adh_id" id="adh_id" type="text" required class="validate">
