@@ -1,40 +1,26 @@
 <h3>Cyclos</h3>
-<table class="striped responsive-table">
-    <tr>
-        <th>Login</th>    
-        <th>Type</th>    
-        <th>Ancien</th>
-        <th>Nouveau</th>
-        <th>Sens</th>
-    </tr>
-
-    <!-- Here is where we iterate through our $articles query object, printing out article info -->
-    
-    <?php foreach ($infos as $key=>$info): ?>
-    <tr>
-        <td>
-            <?php echo $key; ?>
-        </td>
-        <?php 
-        $i=0; 
-        foreach ($info as $inf):
-            if ($i != 0):
-        ?>
-            <tr>
-        <?php endif ?>
-        <td><?php echo $inf["type"]; ?></td>
-        <td><?php echo $inf["oldvalue"] ?? ""; ?></td>
-        <td><?php echo $inf["newvalue"] ?? ""; ?></td>
+<form class="col s12" method="post" action="/cyclos/seechanges">
+<div class="row">
+    <div class="input-field col s4">
+        <select id="filename" name="filename">
         <?php
-        if ($inf["dbtochange"] == "cyclos") {
-            echo '<td><span class="material-icons">arrow_forward</span></td>';
-        } else {
-            echo '<td><span class="material-icons">arrow_back</span></td>';
+        $i=0;
+        foreach($files as $file) {
+            echo '<option value="'.$file.'"';
+            if ($i==0) {
+                echo ' selected';
+            }
+            echo '>'.$file.'</option>';
+            $i++;
         }
         ?>
-        </tr>
-        <?php $i++;
-        endforeach;
-        ?>
-    <?php endforeach; ?>
-</table>
+        <label>Fichier</label>
+        </select>
+        <button class="btn-floating btn-large waves-effect waves-light btn-pink" type="submit" name="action">
+        <i class="material-icons right">preview</i>
+        </button>
+    </div>
+</div>
+</form>
+<a class="btn-floating btn-large waves-effect waves-light btn-pink" onclick="addcyclosspinner();" href="/cyclos/checkchanges"><i class="material-icons">compare_arrows</i></a>
+<div id="spinner"></div>
