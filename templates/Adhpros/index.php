@@ -72,6 +72,12 @@ if ($trash_view) {
 <div id="results">
 <table class="striped responsive-table">
     <tr>
+        <th>
+            <label>
+            <input type="checkbox" id="selectAll"/>
+            <span></span>
+            </label>
+        </th>
         <th><?= $this->Html->link("Id", [
             'controller' => 'adhpros',
             'action' => 'index',
@@ -82,6 +88,12 @@ if ($trash_view) {
             'controller' => 'adhpros',
             'action' => 'index',
             '?' => ['orderby' => "date_adh"]
+        ]); ?>
+        </th>
+        <th><?= $this->Html->link("Année.s d'adh", [
+            'controller' => 'adhs',
+            'action' => 'index',
+            '?' => ['orderby' => "adh_years"]
         ]); ?>
         </th>
         <th><?= $this->Html->link("Nom de l'orga", [
@@ -150,6 +162,12 @@ if ($trash_view) {
     <?php foreach ($adhpros as $adhpro): ?>
     <tr>
         <td>
+            <label>
+            <input type="checkbox" id="<?php echo $adhpro->id; ?>" name="<?php echo $adhpro->id; ?>"/>
+            <span></span>
+            </label>
+        </td>
+        <td>
             <?php echo $adhpro->adh_id; ?>
         </td>
         <td>
@@ -158,6 +176,9 @@ if ($trash_view) {
                 echo $adhpro->date_adh->format('Y-m-d');
             }
             ?>
+        </td>
+        <td>
+            <?= $adhpro->adh_years ?>
         </td>
         <td>
             <?= $adhpro->orga_name ?>
@@ -225,3 +246,26 @@ if ($trash_view) {
     </tr>
     <?php endforeach; ?>
 </table>
+<div class="row">
+    <div class="input-field col s3">
+        <select multiple name="adh_years[]" id="adh_years" required>
+            <option value="" disabled>Choisir</option>
+            <?php
+            $tmp=true;
+            if (date("W")>=44){
+              echo '<option value="'.(date("Y")+1).'">'.(date("Y")+1).'</option>';
+              $tmp=false;
+            }
+            echo '<option value="'.date("Y").'">'.date("Y").'</option>';
+            echo '<option value="'.(date("Y")-1).'">'.(date("Y")-1).'</option>';
+            if ($tmp) {
+              echo '<option value="'.(date("Y")-2).'">'.(date("Y")-2).'</option>';
+            }
+            ?>
+        </select>
+        <label>Années d'adhésion</label>
+    </div>
+    <div class="input-field col s3">
+        <button class="btn btn-primary" onclick="applyAdh('adhpros');">Appliquer</button>
+    </div>
+</div>

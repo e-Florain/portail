@@ -187,6 +187,17 @@ class AdhprosController extends AppController
         }
     }
 
+    public function applyYears($id, $years)
+    {
+        $adhpro = $this->Adhpros->get($id);
+        $adhpro["adh_years"] = $years;
+        if ($this->Adhpros->save($adhpro)) {
+            $this->Flash->success(__('L\'adhérent a été modifié.'));
+            //return $this->redirect('/adhs/index');
+        }
+        //$this->viewBuilder()->setLayout('ajax');
+    }
+
     public function delete($id) {
         $adhpro = $this->Adhpros->get($id);
         if ($adhpro['deleted'] == 1) {

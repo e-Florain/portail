@@ -188,6 +188,17 @@ class AdhsController extends AppController
         }
     }
 
+    public function applyYears($id, $years)
+    {
+        $adh = $this->Adhs->get($id);
+        $adh["adh_years"] = $years;
+        if ($this->Adhs->save($adh)) {
+            $this->Flash->success(__('L\'adhérent a été modifié.'));
+            //return $this->redirect('/adhs/index');
+        }
+        //$this->viewBuilder()->setLayout('ajax');
+    }
+
     public function delete($id)
     {
         $adh = $this->Adhs->get($id);

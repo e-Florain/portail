@@ -1,6 +1,12 @@
 Adhérents pros;<?php echo $trash_view.";".$nbitems; ?>;
 <table class="striped responsive-table">
     <tr>
+        <th>
+            <label>
+            <input type="checkbox" id="selectAll"/>
+            <span></span>
+            </label>
+        </th>
         <th><?= $this->Html->link("Id", [
             'controller' => 'adhpros',
             'action' => 'index',
@@ -11,6 +17,12 @@ Adhérents pros;<?php echo $trash_view.";".$nbitems; ?>;
             'controller' => 'adhpros',
             'action' => 'index',
             '?' => ['orderby' => "date_adh"]
+        ]); ?>
+        </th>
+        <th><?= $this->Html->link("Année.s d'adh", [
+            'controller' => 'adhs',
+            'action' => 'index',
+            '?' => ['orderby' => "adh_years"]
         ]); ?>
         </th>
         <th><?= $this->Html->link("Nom de l'orga", [
@@ -73,6 +85,12 @@ Adhérents pros;<?php echo $trash_view.";".$nbitems; ?>;
     <?php foreach ($adhpros as $adhpro): ?>
     <tr>
         <td>
+            <label>
+            <input type="checkbox" id="<?php echo $adhpro->id; ?>" name="<?php echo $adhpro->id; ?>"/>
+            <span></span>
+            </label>
+        </td>
+        <td>
             <?php echo $adhpro->adh_id; ?>
         </td>
         <td>
@@ -81,6 +99,9 @@ Adhérents pros;<?php echo $trash_view.";".$nbitems; ?>;
                 echo $adhpro->date_adh->format('Y-m-d');
             }
             ?>
+        </td>
+        <td>
+            <?= $adhpro->adh_years ?>
         </td>
         <td>
             <?= $adhpro->orga_name ?>

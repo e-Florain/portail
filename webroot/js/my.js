@@ -113,3 +113,47 @@ $("#filter_Adhpros_text").keyup(function() {
 $('.checkAdhprosYears:checkbox').on('change', function() {
   filter("Adhpros");
 });
+
+function addcyclosspinner() {
+  var url = "/cyclos/spinner";
+  $.get(url)
+    .done(function( data ) {
+      $("#spinner").html(data);
+  });
+}
+
+$('#selectAll').click(function(e){
+  console.log("test");
+  //var table= $(e.target).closest('table');
+  //console.log(table);
+  //$('td input:checkbox',table).prop('checked',this.checked);
+  $('table [type="checkbox"]').each(function(i, chk) {
+    console.log(i);
+    $(this).attr('checked',true);
+  });
+});
+
+function applyAdh(controller) {
+  $('table [type="checkbox"]').each(function(i, chk) {
+    if (chk.checked) {
+      //console.log("Checked!", i, chk);
+      console.log(chk.name);
+      if (chk.name != "") {
+        var str = $('#adh_years option:selected').text();
+        var i=0;
+        var years = "";
+        for (i=0;i<(str.length / 4);i++) {
+          years = years+str.substr(i*4, 4)+";";
+        }
+        var url = "/"+controller+"/apply_years/"+chk.name+"/"+years;
+        console.log(url);
+        $.get(url)
+          .done(function( data ) {
+            console.log(data);
+            window.location.href = "/"+controller+"/index";
+            //$("#spinner").html(data);
+        });
+      }
+    }
+  });
+}

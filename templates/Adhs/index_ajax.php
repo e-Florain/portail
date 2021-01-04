@@ -1,6 +1,12 @@
 Adhérents;<?php echo $trash_view.";".$nbitems; ?>;
 <table class="striped responsive-table">
     <tr>
+        <th>
+            <label>
+            <input type="checkbox" id="selectAll"/>
+            <span></span>
+            </label>
+        </th>
         <th><?= $this->Html->link("Id", [
             'controller' => 'adhs',
             'action' => 'index',
@@ -80,6 +86,12 @@ Adhérents;<?php echo $trash_view.";".$nbitems; ?>;
 
     <?php foreach ($adhs as $adh): ?>
     <tr>
+        <td>
+            <label>
+            <input type="checkbox" id="<?php echo $adh->id; ?>" name="<?php echo $adh->id; ?>"/>
+            <span></span>
+            </label>
+        </td>
         <td>
             <?= $this->Html->link($adh->adh_id, ['action' => 'view', $adh->adh_id]) ?>
         </td>

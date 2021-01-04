@@ -72,6 +72,12 @@ if ($trash_view) {
 <div id="results">
 <table class="striped responsive-table">
     <tr>
+        <th>
+            <label>
+            <input type="checkbox" id="selectAll"/>
+            <span></span>
+            </label>
+        </th>
         <th><?= $this->Html->link("Id", [
             'controller' => 'adhs',
             'action' => 'index',
@@ -152,6 +158,12 @@ if ($trash_view) {
     <?php foreach ($adhs as $adh): ?>
     <tr>
         <td>
+            <label>
+            <input type="checkbox" id="<?php echo $adh->id; ?>" name="<?php echo $adh->id; ?>"/>
+            <span></span>
+            </label>
+        </td>
+        <td>
             <?= $adh->adh_id ?>
         </td>
         <td>
@@ -212,4 +224,27 @@ if ($trash_view) {
     </tr>
     <?php endforeach; ?>
 </table>
+</div>
+<div class="row">
+    <div class="input-field col s3">
+        <select multiple name="adh_years[]" id="adh_years" required>
+            <option value="" disabled>Choisir</option>
+            <?php
+            $tmp=true;
+            if (date("W")>=44){
+              echo '<option value="'.(date("Y")+1).'">'.(date("Y")+1).'</option>';
+              $tmp=false;
+            }
+            echo '<option value="'.date("Y").'">'.date("Y").'</option>';
+            echo '<option value="'.(date("Y")-1).'">'.(date("Y")-1).'</option>';
+            if ($tmp) {
+              echo '<option value="'.(date("Y")-2).'">'.(date("Y")-2).'</option>';
+            }
+            ?>
+        </select>
+        <label>Années d'adhésion</label>
+    </div>
+    <div class="input-field col s3">
+        <button class="btn btn-primary" onclick="applyAdh('adhs');">Appliquer</button>
+    </div>
 </div>
