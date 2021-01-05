@@ -8,19 +8,33 @@ use Cake\I18n\FrozenTime;
 
 class CyclosController extends AppController
 {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        if ($_SESSION["Auth"]->role == 'root') {
+            $this->Auth->allow();
+        } elseif ($_SESSION["Auth"]->role == 'admin') {
+            $this->Auth->allow();
+        } else {
+            $this->Auth->allow(['index']);
+        }
+    }
+
     public function index()
     {   
         $path = "../../cyclos-python/json";
         $dir = new Folder($path);
-        $files = array_reverse($dir->find('.*\.json',true));
-        $this->set(compact('files'));
+        $filesadhpros = array_reverse($dir->find('.*adhpros-changes\.json',true));
+        $this->set(compact('filesadhpros'));
+        $filesadhs = array_reverse($dir->find('.*adhs-changes\.json',true));
+        $this->set(compact('filesadhs'));
     }
 
-    public function seechanges()
+    public function seechanges($type)
     {
         if ($this->request->is('post')) {            
             $data = $this->request->getData();
-            $filename=$data["filename"];
+            $filename=$data["filename".$type];
             $path = "../../cyclos-python/json" . DS . $filename;
             $file = new File($path);
             $contents = $file->read();
@@ -30,10 +44,11 @@ class CyclosController extends AppController
         }
     }
 
-    public function checkchanges()
+    public function checkchanges($type)
     {
-        $output = shell_exec('python3 /home/www/cyclos-python/sync.py -simulate');
-        echo "<pre>$output</pre>";
+        $output = shell_exec('python3 /home/www/cyclos-python/sync.py -simulate --'.$type);
+        $this->set(compact('output'));
+        $this->viewBuilder()->setLayout('ajax');
     }
 
     public function applychanges($jsonfile)

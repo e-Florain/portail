@@ -14,6 +14,18 @@ class AssociationsController extends AppController
         "activite" => "Activité"
     );
 
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        if ($_SESSION["Auth"]->role == 'root') {
+            $this->Auth->allow();
+        } elseif ($_SESSION["Auth"]->role == 'admin') {
+            $this->Auth->allow();
+        } else {
+            $this->Auth->allow(['index']);
+        }
+    }
+
     public function index()
     {
         $this->loadComponent('Paginator');

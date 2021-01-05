@@ -43,12 +43,29 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        //$this->loadComponent('Auth');
+        $this->loadComponent('Auth');
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
         $this->loadComponent('Authentication.Authentication');
         //$this->loadComponent('FormProtection');
+    }
+
+
+
+    /**
+     * Authorize all actions for super admin and stop other users.
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        // Root can access everything.
+        if (isset($_SESSION["Auth"]->role) && $_SESSION["Auth"]->role === 'root') {
+            return true;
+        }
+
+        // Default deny
+        $this->Auth->setConfig('authError', "Erreur, vous n'êtes pas autorisé à vous rendre sur cette page.");
+        return true;
     }
 }

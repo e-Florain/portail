@@ -24,6 +24,24 @@ class AdhsController extends AppController
         "newsletter" => "NL"
     );
 
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        if ($_SESSION["Auth"]->role == 'root') {
+            $this->Auth->allow();
+        } elseif ($_SESSION["Auth"]->role == 'admin') {
+            $this->Auth->allow();
+        } else {
+            $this->Auth->allow(['index']);
+        }
+    }
+
+    /*public function isAuthorized($user)
+    {
+        echo "test";
+        return true;
+    }*/
+
     public function index($trasharg="trash:false")
     {
         $this->loadComponent('Paginator');
