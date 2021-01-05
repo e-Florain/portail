@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     $('.tooltipped').tooltip();
   });
 
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+
   $(".dropdown-trigger").dropdown();
 
   $(document).ready(function(){
@@ -114,11 +118,28 @@ $('.checkAdhprosYears:checkbox').on('change', function() {
   filter("Adhpros");
 });
 
-function addcyclosspinner() {
+function checkchanges(type) {
+  var x = document.getElementById("filenameadhpros");
+  //console.log(x);
+  var option = document.createElement("option");
+  option.text = "Kiwi";
+  /*option.value = "kee";
+  option.innerHTML = "ddd";*/
+  //x.appendChild(option);
+  //x.add(new Option("age"));
+  //var myNewOption = new Option("TheText", "TheValue");
+  //document.formadhpros.filenameadhpros.options[0] = myNewOption;
   var url = "/cyclos/spinner";
   $.get(url)
     .done(function( data ) {
       $("#spinner").html(data);
+  })
+  url = "/cyclos/checkchanges/"+type;
+  $.get(url)
+    .done(function( data ) {
+      $("#spinner").html("");
+      option.text = data;
+      x.add(option);
   });
 }
 
