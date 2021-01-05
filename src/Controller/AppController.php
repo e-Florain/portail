@@ -60,9 +60,9 @@ class AppController extends Controller
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         // Root can access everything.
-        if (isset($_SESSION["Auth"]->role) && $_SESSION["Auth"]->role === 'root') {
+        /*if (isset($_SESSION["Auth"]->role) && $_SESSION["Auth"]->role === 'root') {
             return true;
-        }
+        }*/
 
         // Default deny
         $this->Auth->setConfig('authError', "Erreur, vous n'êtes pas autorisé à vous rendre sur cette page.");
