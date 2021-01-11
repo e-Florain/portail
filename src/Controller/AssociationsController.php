@@ -28,17 +28,25 @@ class AssociationsController extends AppController
         }
     }
 
-    public function index()
+    public function index($trasharg="trash:false")
     {
         $this->loadComponent('Paginator');
         $order = $this->request->getQuery('orderby') ?? "asso_id";
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
         $sort = $this->request->getQuery('sort') ?? "ASC";
-        //var_dump($sort);
-        $assos = $this->Paginator->paginate($this->Associations->find()->order([$order => $sort]));
-        //var_dump($assos);
+       
+        $nbitems_trashed = $this->Associations->find()->where(['deleted' => 1])->all()->count();
+        $nbitems = $this->Associations->find()->where(['deleted' => 0])->all()->count();
+        if ($trasharg == "trash:true") {
+            $this->set('trash_view', true);
+            $assos = $this->Paginator->paginate($this->Associations->find()->where(['deleted' => 1])->order([$order => $sort]));
+        } else {
+            $this->set('trash_view', false);
+            $assos = $this->Paginator->paginate($this->Associations->find()->where(['deleted' => 0])->order([$order => $sort]));
+        }
         $this->set(compact('assos'));
-        
+        $this->set('nbitems_trashed', $nbitems_trashed);
+        $this->set('nbitems', $nbitems);
         //$this->Flash->success(__('The adh has been saved.'));
        // echo "true ".$order;
     }
@@ -84,12 +92,34 @@ class AssociationsController extends AppController
         }
     }
 
-    public function delete($id)
+    public function delete($id) {
+        $asso = $this->Associations->get($id);
+        if ($asso['deleted'] == 1) {
+            $result = $this->Associations->delete($adhpro);
+            $this->Flash->success(__('L\'association a été effacée.'));
+            return $this->redirect('/associations/index');
+        } else {
+            $asso['deleted'] = 1;
+            if ($this->Associations->save($asso)) {
+                $this->Flash->success(__('L\'association a été effacé.'));
+                return $this->redirect('/associations/index');
+            } else {
+                $this->Flash->error(__('Erreur : Impossible d\'effacer l\'association.'));
+                return $this->redirect('/associations/index');
+            }
+        }
+    }
+
+    public function restore($id)
     {
         $asso = $this->Associations->get($id);
-        $result = $this->Associations->delete($asso);
-        $this->Flash->success(__('L\'association a été effacée.'));
-        return $this->redirect('/associations/index');
+        if ($asso['deleted'] == 1) {
+            $asso['deleted'] = 0;
+            if ($this->Associations->save($asso)) {
+                $this->Flash->success(__('L\'association a été restauré.'));
+                return $this->redirect('/associations/index');
+            }
+        }
     }
 
     public function search()
