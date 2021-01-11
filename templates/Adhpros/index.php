@@ -143,7 +143,7 @@ if ($trash_view) {
         <th><?= $this->Html->link("Cyclos", [
             'controller' => 'adhpros',
             'action' => 'index',
-            '?' => ['orderby' => "account_cyclos"]
+            '?' => ['orderby' => "cyclos_account"]
         ]); ?>
         </th>
         <th><?= $this->Html->link("NL", [

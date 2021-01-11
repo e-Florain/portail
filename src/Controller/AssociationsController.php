@@ -31,7 +31,7 @@ class AssociationsController extends AppController
     public function index()
     {
         $this->loadComponent('Paginator');
-        $order = $this->request->getQuery('orderby') ?? "id";
+        $order = $this->request->getQuery('orderby') ?? "asso_id";
         //$sort = isset($this->request->getQuery('sort')) ? $this->request->getQuery('sort') : "ASC";
         $sort = $this->request->getQuery('sort') ?? "ASC";
         //var_dump($sort);

@@ -12,6 +12,7 @@ class AdhprosController extends AppController
     private $list_payment_type = array("Florains", "Chèques", "Espèces", "HelloAsso");
     private $list_keys = array(
         "adh_id" => "Id",
+        "adh_years" => "Année.s d'adh",
         "date_adh" => "Date d'adh",
         "orga_name" => "Nom de l'orga",
         "orga_contact" => "Contact",
@@ -22,7 +23,7 @@ class AdhprosController extends AppController
         "phonenumber" => "Tel",
         "amount" => "Montant",
         "payment_type" => "Paiement",
-        "account_cyclos" => "Cyclos",
+        "cyclos_account" => "Cyclos",
         "invoice" => "Facture",
         "newsletter" => "NL",
         "annuaire" => "Annuaire"
@@ -140,15 +141,34 @@ class AdhprosController extends AppController
             } else {
                 $data["annuaire"] = False;
             }
+            if (isset($data["cyclos_account"])) {
+                if ($data["cyclos_account"] == "on") {
+                    $data["cyclos_account"] = True;
+                } else {
+                    $data["cyclos_account"] = False;
+                }
+            } else {
+                $data["cyclos_account"] = False;
+            }
             $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adh = $this->Adhpros->patchEntity($adhpro, $data);
             if ($this->Adhpros->save($adhpro)) {
                 $this->Flash->success(__('L\'adhérent a été ajouté.'));
                 return $this->redirect(['action' => 'add']);
             } else {
-                $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
-                return $this->redirect('/adhs/index');
-            } 
+                $errors = $adh->getErrors();
+                if (isset($errors["status"])) {
+                    $err = array_values($errors["status"])[0];
+                    if (isset($err)) {
+                        $this->Flash->error(__('Erreur : '.$err));
+                    } else {
+                        $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
+                    } 
+                } else {
+                    $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
+                }
+                //return $this->redirect('/adhs/index');
+            }
         }
     }
 
@@ -188,6 +208,15 @@ class AdhprosController extends AppController
                 }
             } else {
                 $data["annuaire"] = False;
+            }
+            if (isset($data["cyclos_account"])) {
+                if ($data["cyclos_account"] == "on") {
+                    $data["cyclos_account"] = True;
+                } else {
+                    $data["cyclos_account"] = False;
+                }
+            } else {
+                $data["cyclos_account"] = False;
             }
             $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adhpro = $this->Adhpros->patchEntity($adhpro, $data);
@@ -265,6 +294,7 @@ class AdhprosController extends AppController
                     $datacsv = str_getcsv($infos[$i]);
                     if (count($keys) == count($datacsv)) {
                         $data = array_combine($keys, $datacsv); 
+                        //var_dump($data);
                         if ($data != FALSE) {
                             $adhpro = $this->Adhpros->newEmptyEntity();
                             $data["date_adh"] = $data["date_adh"]."00:00:00";
@@ -317,7 +347,7 @@ class AdhprosController extends AppController
             } else {
                 $datestr="";
             }
-            $infos=$user->adh_id.",".$datestr.",".$user->orga_name.",".$user->orga_contact.",".$user->email.",".$user->address.",".$user->postcode.",".$user->city.",".$user->phonenumber.",".$user->amount.",".$user->payment_type.",".$user->invoice.",".$user->newsletter.",".$user->annuaire."\n";
+            $infos=$user->adh_id.",".$user->adh_years.",".$datestr.",".$user->orga_name.",".$user->orga_contact.",".$user->email.",".$user->address.",".$user->postcode.",".$user->city.",".$user->phonenumber.",".$user->amount.",".$user->payment_type.",".$user->cyclos_account.",".$user->invoice.",".$user->newsletter.",".$user->annuaire."\n";
             $exportCSV=$exportCSV.$infos;
             $file->append($infos);
         }

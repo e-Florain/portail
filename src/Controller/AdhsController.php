@@ -147,10 +147,9 @@ class AdhsController extends AppController
                     $tmp=$tmp.$adh_year.";";
                 }
             }
-            var_dump($tmp);
             $data["adh_years"] = $tmp;
             $data["date_adh"] = $data["date_adh"]."00:00:00";
-            $adh = $this->Adhs->newEntity($this->request->getData());
+            $adh = $this->Adhs->newEntity($data);
             if ($adh->getErrors()) {
                 var_dump($adh->getErrors());
             } else {
@@ -159,7 +158,17 @@ class AdhsController extends AppController
                     $this->Flash->success(__('L\'adhérent a été ajouté.'));
                     return $this->redirect(['action' => 'add']);
                 } else {
-                    $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
+                    $errors = $adh->getErrors();
+                    if (isset($errors["status"])) {
+                        $err = array_values($errors["status"])[0];
+                        if (isset($err)) {
+                            $this->Flash->error(__('Erreur : '.$err));
+                        } else {
+                            $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
+                        } 
+                    } else {
+                        $this->Flash->error(__('Erreur : Impossible d\'ajouter l\'adhérent.'));
+                    }
                     //return $this->redirect('/adhs/index');
                 }
             }

@@ -69,6 +69,12 @@ Adhérents pros;<?php echo $trash_view.";".$nbitems; ?>;
             '?' => ['orderby' => "amount"]
         ]); ?>
         </th>
+        <th><?= $this->Html->link("Cyclos", [
+            'controller' => 'adhpros',
+            'action' => 'index',
+            '?' => ['orderby' => "cyclos_account"]
+        ]); ?>
+        </th>
         <th><?= $this->Html->link("NL", [
             'controller' => 'adhpros',
             'action' => 'index',
@@ -129,6 +135,13 @@ Adhérents pros;<?php echo $trash_view.";".$nbitems; ?>;
         </td>
         <td>
             <?= $adhpro->amount ?>
+        </td>
+        <td>
+            <?php 
+                if ($adhpro->cyclos_account) {
+                    echo '<i class="material-icons">done</i>';
+                }
+            ?>
         </td>
         <td>
             <?php 
