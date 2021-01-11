@@ -233,7 +233,14 @@ class AdhprosController extends AppController
     public function applyYears($id, $years)
     {
         $adhpro = $this->Adhpros->get($id);
-        $adhpro["adh_years"] = $years;
+        $yeararr1 = explode(";", $adhpro["adh_years"]);
+        $yeararr2 = explode(";", $years);
+        $tmp = "";
+        $arr = array_filter(array_unique(array_merge($yeararr1, $yeararr2)));
+        foreach ($arr as $adh_year) {
+            $tmp=$tmp.$adh_year.";";
+        }
+        $adhpro["adh_years"] = $tmp;
         if ($this->Adhpros->save($adhpro)) {
             $this->Flash->success(__('L\'adhérent a été modifié.'));
             //return $this->redirect('/adhs/index');

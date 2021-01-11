@@ -220,7 +220,14 @@ class AdhsController extends AppController
     public function applyYears($id, $years)
     {
         $adh = $this->Adhs->get($id);
-        $adh["adh_years"] = $years;
+        $yeararr1 = explode(";", $adh["adh_years"]);
+        $yeararr2 = explode(";", $years);
+        $tmp = "";
+        $arr = array_filter(array_unique(array_merge($yeararr1, $yeararr2)));
+        foreach ($arr as $adh_year) {
+            $tmp=$tmp.$adh_year.";";
+        }
+        $adh["adh_years"] = $tmp;
         if ($this->Adhs->save($adh)) {
             $this->Flash->success(__('L\'adhérent a été modifié.'));
             //return $this->redirect('/adhs/index');
