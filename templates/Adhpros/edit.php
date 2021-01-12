@@ -16,6 +16,45 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
+          <select multiple name="adh_years[]">
+            <option value="" disabled>Choisir</option>
+            <?php
+            $infos = explode(";", $adhpro->adh_years);
+            $tmp=true;
+            if (date("W")>=44){
+              echo '<option ';
+              if (in_array((date("Y")+1), $infos)) {
+                echo 'selected';
+              }
+              echo ' value="'.(date("Y")+1).'">'.(date("Y")+1).'</option>';
+              $tmp=false;
+            }
+
+            echo '<option ';
+            if (in_array((date("Y")), $infos)) {
+              echo 'selected';
+            }
+            echo ' value="'.date("Y").'">'.date("Y").'</option>';
+
+            echo '<option ';
+            if (in_array((date("Y")-1), $infos)) {
+              echo 'selected';
+            }
+            echo ' value="'.(date("Y")-1).'">'.(date("Y")-1).'</option>';
+            if ($tmp) {
+              echo '<option ';
+              if (in_array((date("Y")-2), $infos)) {
+                echo 'selected';
+              }
+              echo ' value="'.(date("Y")-2).'">'.(date("Y")-2).'</option>';
+            }
+            ?>
+          </select>
+          <label>Années d'adhésion</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
           <input name="orga_name" id="orga_name" type="text" <?php echo 'value="'.$adhpro->orga_name.'"'; ?> class="validate">
           <label for="orga_name">Nom de l'organisation</label>
         </div>

@@ -14,6 +14,26 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
+          <select multiple name="adh_years[]" required>
+            <option value="" disabled>Choisir</option>
+            <?php
+            $tmp=true;
+            if (date("W")>=44){
+              echo '<option value="'.(date("Y")+1).'">'.(date("Y")+1).'</option>';
+              $tmp=false;
+            }
+            echo '<option value="'.date("Y").'">'.date("Y").'</option>';
+            echo '<option value="'.(date("Y")-1).'">'.(date("Y")-1).'</option>';
+            if ($tmp) {
+              echo '<option value="'.(date("Y")-2).'">'.(date("Y")-2).'</option>';
+            }
+            ?>
+          </select>
+          <label>Années d'adhésion</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
           <input name="orga_name" id="orga_name" type="text" required class="validate">
           <label for="orga_name">Nom de l'organisation</label>
         </div>

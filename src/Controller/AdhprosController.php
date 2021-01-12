@@ -150,6 +150,14 @@ class AdhprosController extends AppController
             } else {
                 $data["cyclos_account"] = False;
             }
+            $tmp = "";
+            if (isset($data["adh_years"])) {
+                foreach ($data["adh_years"] as $adh_year) {
+                    $tmp=$tmp.$adh_year.";";
+                }
+            }
+            $data["adh_years"] = $tmp;
+            $data["date_adh"] = $data["date_adh"]."00:00:00";
             $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adh = $this->Adhpros->patchEntity($adhpro, $data);
             if ($this->Adhpros->save($adhpro)) {
@@ -218,6 +226,13 @@ class AdhprosController extends AppController
             } else {
                 $data["cyclos_account"] = False;
             }
+            $tmp = "";
+            if (isset($data["adh_years"])) {
+                foreach ($data["adh_years"] as $adh_year) {
+                    $tmp=$tmp.$adh_year.";";
+                }
+            }
+            $data["adh_years"] = $tmp;
             $data["date_adh"] = $data["date_adh"]."00:00:00";
             $adhpro = $this->Adhpros->patchEntity($adhpro, $data);
             if ($this->Adhpros->save($adhpro)) {
