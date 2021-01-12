@@ -34,7 +34,7 @@ class AdhsController extends AppController
             } elseif ($_SESSION["Auth"]->role == 'admin') {
                 $this->Auth->allow();
             } else {
-                $this->Auth->allow(['index']);
+                $this->Auth->allow(['index', 'indexAjax']);
             }
         }
     }
