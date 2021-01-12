@@ -120,7 +120,12 @@
       </div>
       <p>
         &nbsp;<label>
-        
+            <input name="cyclos_account" id="cyclos_account" <?php if ($adh->cyclos_account) { echo "checked"; } ?> type="checkbox" />
+            <span>Compte Cyclos</span>
+        </label>
+      </p>
+      <p>
+        &nbsp;<label>
             <input name="newsletter" id="newsletter" <?php if ($adh->newsletter) { echo "checked"; } ?> type="checkbox" />
             <span>Ajout Newsletter</span>
         </label>

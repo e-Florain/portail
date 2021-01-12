@@ -21,6 +21,7 @@ class AdhsController extends AppController
         "asso_id" => "Asso",
         "amount" => "Montant",
         "payment_type" => "Paiement",
+        "cyclos_account" => "Cyclos",
         "newsletter" => "NL"
     );
 
@@ -136,11 +137,15 @@ class AdhsController extends AppController
             } else {
                 $data["newsletter"] = False;
             }
-            /*foreach ($assos as $asso) {
-                if ($data["asso"] == $asso["name"]) {
-                    $data["asso_id"] = $asso["id"];
+            if (isset($data["cyclos_account"])) {
+                if ($data["cyclos_account"] == "on") {
+                    $data["cyclos_account"] = True;
+                } else {
+                    $data["cyclos_account"] = False;
                 }
-            }*/
+            } else {
+                $data["cyclos_account"] = False;
+            }
             $tmp = "";
             if (isset($data["adh_years"])) {
                 foreach ($data["adh_years"] as $adh_year) {
@@ -197,6 +202,15 @@ class AdhsController extends AppController
                 }
             } else {
                 $data["newsletter"] = False;
+            }
+            if (isset($data["cyclos_account"])) {
+                if ($data["cyclos_account"] == "on") {
+                    $data["cyclos_account"] = True;
+                } else {
+                    $data["cyclos_account"] = False;
+                }
+            } else {
+                $data["cyclos_account"] = False;
             }
             $tmp = "";
             if (isset($data["adh_years"])) {
@@ -353,7 +367,7 @@ class AdhsController extends AppController
             } else {
                 $datestr="";
             }
-            $infos=$user->adh_id.",".$user->adh_years.",".$datestr.",".$user->lastname.",".$user->firstname.",".$user->email.",".$user->city.",".$user->phonenumber.",".$assos[$user->asso_id].",".$user->amount.",".$user->payment_type.",".$user->newsletter."\n";
+            $infos=$user->adh_id.",".$user->adh_years.",".$datestr.",".$user->lastname.",".$user->firstname.",".$user->email.",".$user->city.",".$user->phonenumber.",".$assos[$user->asso_id].",".$user->amount.",".$user->payment_type.",".$user->cyclos_account.",".$user->newsletter."\n";
             $exportCSV=$exportCSV.$infos;
             $file->append($infos);
         }

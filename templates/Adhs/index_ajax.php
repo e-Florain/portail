@@ -73,6 +73,12 @@ Adhérents;<?php echo $trash_view.";".$nbitems; ?>;
             '?' => ['orderby' => "amount"]
         ]); ?>
         </th>
+        <th><?= $this->Html->link("Cyclos", [
+            'controller' => 'adhs',
+            'action' => 'index',
+            '?' => ['orderby' => "cyclos_account"]
+        ]); ?>
+        </th>
         <th><?= $this->Html->link("Newsletter", [
             'controller' => 'adhs',
             'action' => 'index',
@@ -93,7 +99,7 @@ Adhérents;<?php echo $trash_view.";".$nbitems; ?>;
             </label>
         </td>
         <td>
-            <?= $this->Html->link($adh->adh_id, ['action' => 'view', $adh->adh_id]) ?>
+            <?= $adh->adh_id ?>
         </td>
         <td>
             <?php 
@@ -134,6 +140,13 @@ Adhérents;<?php echo $trash_view.";".$nbitems; ?>;
         </td>
         <td>
             <?= $adh->amount ?>
+        </td>
+        <td>
+            <?php 
+                if ($adh->cyclos_account) {
+                    echo '<i class="material-icons">done</i>';
+                }
+            ?>
         </td>
         <td>
             <?php 
