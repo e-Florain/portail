@@ -152,7 +152,12 @@ if ($trash_view) {
             '?' => ['orderby' => "newsletter"]
         ]); ?>
         </th>
-        <th>Facture</th>
+        <th><?= $this->Html->link("Facture", [
+            'controller' => 'adhpros',
+            'action' => 'index',
+            '?' => ['orderby' => "invoice"]
+        ]); ?>
+        </th>
         <th>Annuaire</th>
         <th></th>
     </tr>

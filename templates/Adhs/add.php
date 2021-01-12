@@ -88,7 +88,7 @@
       <div class="row">
         <div class="input-field col s6">
           <input name="amount" id="amount" required type="text" class="validate">
-          <label for="amount">Montant (entre 10 et 50)</label>
+          <label for="amount">Montant (entre 5 et 50)</label>
         </div>
       </div>
       <p>
