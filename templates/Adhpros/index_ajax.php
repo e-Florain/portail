@@ -172,3 +172,16 @@ Adhérents pros;<?php echo $trash_view.";".$nbitems; ?>;
     </tr>
     <?php endforeach; ?>
 </table>
+<?php
+echo '<ul class="pagination">';
+echo $this->Paginator->first("<<",array('rel'=>'prev','tag'=>'li'));
+if($this->Paginator->hasPrev()){
+echo $this->Paginator->prev("<",array('tag'=>'li'));
+}
+echo $this->Paginator->numbers(array('first' => 2,'last' => 3,'modulus'=> '4','separator' => '','tag'=>'li'));
+if($this->Paginator->hasNext()){
+    echo $this->Paginator->next(">",array('tag'=>'li'));
+}
+echo $this->Paginator->last(">>",array('rel'=>'next','tag'=>'li'));
+echo '</ul>';
+?>

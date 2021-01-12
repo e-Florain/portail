@@ -246,6 +246,19 @@ if ($trash_view) {
     </tr>
     <?php endforeach; ?>
 </table>
+<?php
+echo '<ul class="pagination">';
+echo $this->Paginator->first("<<",array('rel'=>'prev','tag'=>'li'));
+if($this->Paginator->hasPrev()){
+echo $this->Paginator->prev("<",array('tag'=>'li'));
+}
+echo $this->Paginator->numbers(array('first' => 2,'last' => 3,'modulus'=> '4','separator' => '','tag'=>'li'));
+if($this->Paginator->hasNext()){
+    echo $this->Paginator->next(">",array('tag'=>'li'));
+}
+echo $this->Paginator->last(">>",array('rel'=>'next','tag'=>'li'));
+echo '</ul>';
+?>
 <div class="row">
     <div class="input-field col s3">
         <select multiple name="adh_years[]" id="adh_years" required>

@@ -51,5 +51,5 @@
 </table>
 <br>
 <div class="row">
-    <div class="col s4 offset-s4"><a href="/cyclos/applychanges/<?php echo $filename; ?>" class="btn waves-effect waves-light" >Appliquer les modifications</a></div>
+    <div class="col s4 offset-s4"><a href="/cyclos/applychanges/<?php echo $type; ?>/<?php echo $filename; ?>" class="btn waves-effect waves-light" >Appliquer les modifications</a></div>
 </div>

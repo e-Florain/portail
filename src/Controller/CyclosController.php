@@ -43,6 +43,7 @@ class CyclosController extends AppController
             $infos = json_decode($contents, JSON_OBJECT_AS_ARRAY);
             $this->set(compact('infos'));
             $this->set(compact('filename'));
+            $this->set(compact('type'));
         }
     }
 
@@ -53,9 +54,10 @@ class CyclosController extends AppController
         $this->viewBuilder()->setLayout('ajax');
     }
 
-    public function applychanges($jsonfile)
+    public function applychanges($type, $jsonfile)
     {
-        $output = shell_exec('python3 /home/www/cyclos-python/sync.py -apply '.$jsonfile);
+        $output = shell_exec('python3 /home/www/cyclos-python/sync.py --'.$type.' -apply '.$jsonfile);
+        //echo "python3 /home/www/cyclos-python/sync.py --'.$type.' -apply ".$jsonfile;
         $this->set(compact('jsonfile'));
         $this->set(compact('output'));
     }
