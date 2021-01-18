@@ -65,7 +65,7 @@ class AdhsController extends AppController
         $this->set('nbitems_trashed', $nbitems_trashed);
         $this->set('nbitems', $nbitems);
         $this->set(compact('adhs'));
-        $assos = $this->Associations->find();
+        $assos = $this->Associations->find()->where(['deleted' => 0]);
         $this->set('assos', $assos);
         
         //$this->Flash->success(__('The adh has been saved.'));
@@ -114,7 +114,7 @@ class AdhsController extends AppController
         $this->set('nbitems', $nbitems);
         $adhs = $this->Paginator->paginate($query);
         $this->set(compact('adhs'));
-        $assos = $this->Associations->find();
+        $assos = $this->Associations->find()->where(['deleted' => 0]);
         $this->set('assos', $assos);
         $this->viewBuilder()->setLayout('ajax');
     }
@@ -122,7 +122,7 @@ class AdhsController extends AppController
     public function add()
     {
         $this->loadModel('Associations');
-        $assos = $this->Associations->find()->order(['asso_id' => 'ASC']);
+        $assos = $this->Associations->find()->where(['deleted' => 0])->order(['asso_id' => 'ASC']);
         $this->set('assos', $assos);
         $this->set('list_payment_type', $this->list_payment_type);
         if ($this->request->is('post')) {            
@@ -183,7 +183,7 @@ class AdhsController extends AppController
     public function edit($id)
     {
         $this->loadModel('Associations');
-        $assos = $this->Associations->find()->order(['asso_id' => 'ASC']);
+        $assos = $this->Associations->find()->where(['deleted' => 0])->order(['asso_id' => 'ASC']);
         $this->set('assos', $assos);
         $adh = $this->Adhs->get($id);
         //var_dump($adh);
