@@ -120,8 +120,8 @@ if ($trash_view) {
             '?' => ['orderby' => "phonenumber"]
         ]); ?>
         </th>
-        <th>Adresse</th>
-        <th>CP</th>
+        <!--<th>Adresse</th>
+        <th>CP</th>-->
         <th><?= $this->Html->link("Ville", [
             'controller' => 'adhpros',
             'action' => 'index',
@@ -197,12 +197,12 @@ if ($trash_view) {
         <td>
             <?= $adhpro->phonenumber ?>
         </td>
-        <td>
+        <!--<td>
             <?= $adhpro->address ?>
         </td>
         <td>
             <?= $adhpro->postcode ?>
-        </td>
+        </td>-->
         <td>
             <?= $adhpro->city ?>
         </td>
@@ -241,10 +241,11 @@ if ($trash_view) {
             ?>
         </td>
         <td class="icons">
-            <a <?php echo 'href="/adhpros/edit/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-green"><i class="material-icons">edit</i></a>
-            <a <?php echo 'href="/adhpros/delete/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-orange"><i class="material-icons">delete</i></a>
+            <a <?php echo 'href="/adhpros/view/'.$adhpro->id.'"'; ?> class="btn-floating waves-effect waves-light btn-green"><i class="material-icons">remove_red_eye</i></a>
+            <a <?php echo 'href="/adhpros/edit/'.$adhpro->id.'"'; ?> class="btn-floating waves-effect waves-light btn-green"><i class="material-icons">edit</i></a>
+            <a <?php echo 'href="/adhpros/delete/'.$adhpro->id.'"'; ?> class="btn-floating waves-effect waves-light btn-orange"><i class="material-icons">delete</i></a>
             <?php if ($trash_view): ?>
-            <a <?php echo 'href="/adhpros/restore/'.$adhpro->id.'"'; ?> class="btn-floating btn-large waves-effect waves-light btn-orange"><i class="material-icons">restore_from_trash</i></a>
+            <a <?php echo 'href="/adhpros/restore/'.$adhpro->id.'"'; ?> class="btn-floating waves-effect waves-light btn-orange"><i class="material-icons">restore_from_trash</i></a>
             <?php endif; ?>
         </td>
 
