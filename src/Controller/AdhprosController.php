@@ -21,11 +21,14 @@ class AdhprosController extends AppController
         "postcode" => "CP",
         "city" => "Ville",
         "phonenumber" => "Tel",
+        "phonenumber2" => "Tel2",
         "amount" => "Montant",
+        "donation" => "Don",
         "payment_type" => "Paiement",
         "cyclos_account" => "Cyclos",
         "invoice" => "Facture",
         "newsletter" => "NL",
+        "is_asso" => "Asso ?",
         "annuaire" => "Annuaire"
     );
 
@@ -38,7 +41,7 @@ class AdhprosController extends AppController
             } elseif ($_SESSION["Auth"]->role == 'admin') {
                 $this->Auth->allow();
             } else {
-                $this->Auth->allow(['index']);
+                $this->Auth->allow(['index', 'indexAjax', 'view']);
             }
         }
     }
@@ -113,7 +116,7 @@ class AdhprosController extends AppController
         if ($this->request->is('post')) {            
             $adhpro = $this->Adhpros->newEmptyEntity();
             $data = $this->request->getData();
-            var_dump($data);
+            //var_dump($data);
             if (isset($data["newsletter"])) {
                 if ($data["newsletter"] == "on") {
                     $data["newsletter"] = True;
@@ -150,6 +153,15 @@ class AdhprosController extends AppController
             } else {
                 $data["cyclos_account"] = False;
             }
+            if (isset($data["is_asso"])) {
+                if ($data["is_asso"] == "on") {
+                    $data["is_asso"] = True;
+                } else {
+                    $data["is_asso"] = False;
+                }
+            } else {
+                $data["is_asso"] = False;
+            }
             $tmp = "";
             if (isset($data["adh_years"])) {
                 foreach ($data["adh_years"] as $adh_year) {
@@ -158,7 +170,7 @@ class AdhprosController extends AppController
             }
             $data["adh_years"] = $tmp;
             $data["date_adh"] = $data["date_adh"]."00:00:00";
-            $data["date_adh"] = $data["date_adh"]."00:00:00";
+            $this->set(compact('data'));
             $adh = $this->Adhpros->patchEntity($adhpro, $data);
             if ($this->Adhpros->save($adhpro)) {
                 $this->Flash->success(__('L\'adhérent a été ajouté.'));
@@ -178,6 +190,13 @@ class AdhprosController extends AppController
                 //return $this->redirect('/adhs/index');
             }
         }
+    }
+
+    public function view($id)
+    {
+        $adhpro = $this->Adhpros->get($id);
+        $this->set('list_keys', $this->list_keys);
+        $this->set(compact('adhpro'));
     }
 
     public function edit($id)
@@ -319,9 +338,12 @@ class AdhprosController extends AppController
                         //var_dump($data);
                         if ($data != FALSE) {
                             $adhpro = $this->Adhpros->newEmptyEntity();
+                            $data["phonenumber"] = str_replace(".", "", $data["phonenumber"]);
+                            $data["phonenumber"] = str_replace(" ", "", $data["phonenumber"]);
                             $data["date_adh"] = $data["date_adh"]."00:00:00";
+                            //var_dump($data);
                             $adhpro = $this->Adhpros->patchEntity($adhpro, $data);
-                            //var_dump($adhpro);
+                            var_dump($adhpro);
                             if ($this->Adhpros->save($adhpro)) {
                                 $data['imported'] = 1;
                                 $data['msgerr'] = '';
@@ -331,6 +353,7 @@ class AdhprosController extends AppController
                                 $data['imported'] = 0;
                             }
                             $uploadDatas[] = $data;
+                            //break;
                         }
                     }
                 }

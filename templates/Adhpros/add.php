@@ -4,11 +4,11 @@
     <?php echo $this->Form->create(); ?>
       <div class="row">
         <div class="input-field col s2">
-          <input name="adh_id" id="adh_id" type="text" required class="validate">
+          <input name="adh_id" id="adh_id" type="text" value="<?php echo isset($data['adh_id'])?$data['adh_id']:''; ?>" required class="validate">
           <label for="adh_id">Numéro d'adhérent</label>
         </div>
         <div class="input-field col s3">
-          <input name="date_adh" type="text" id="date_adh" required class="datepicker">
+          <input name="date_adh" type="text" id="date_adh" value="<?php echo isset($data['date_adh'])?substr($data['date_adh'],0,10):''; ?>" required class="datepicker">
           <label for="date_adh">Date d'adhésion</label>
         </div>
       </div>
@@ -34,41 +34,47 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="orga_name" id="orga_name" type="text" required class="validate">
+          <input name="orga_name" id="orga_name" type="text" value="<?php echo isset($data['orga_name'])?$data['orga_name']:''; ?>" required class="validate">
           <label for="orga_name">Nom de l'organisation</label>
         </div>
         <div class="input-field col s6">
-          <input name="orga_contact" id="orga_contact" type="text" required class="validate">
+          <input name="orga_contact" id="orga_contact" type="text" value="<?php echo isset($data['orga_contact'])?$data['orga_contact']:''; ?>" required class="validate">
           <label for="orga_contact">Contact de l'organisation</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="email" id="email" type="email" required class="validate">
+          <input name="email" id="email" type="email" value="<?php echo isset($data['email'])?$data['email']:''; ?>" required class="validate">
           <label for="email">Email</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="phonenumber" id="phonenumber" type="text" class="validate">
+          <input name="phonenumber" id="phonenumber" type="text" value="<?php echo isset($data['phonenumber'])?$data['phonenumber']:''; ?>" class="validate">
           <label for="phonenumber">Téléphone</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="address" id="address" type="text" class="validate">
+          <input name="phonenumber2" id="phonenumber2" type="text" value="<?php echo isset($data['phonenumber2'])?$data['phonenumber2']:''; ?>" class="validate">
+          <label for="phonenumber2">Téléphone 2</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="address" id="address" type="text" value="<?php echo isset($data['address'])?$data['address']:''; ?>" class="validate">
           <label for="address">Adresse</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="postcode" id="postcode" type="text" class="validate">
+          <input name="postcode" id="postcode" type="text" value="<?php echo isset($data['postcode'])?$data['postcode']:''; ?>" class="validate">
           <label for="postcode">Code Postal</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="city" id="city" type="text" class="validate">
+          <input name="city" id="city" type="text" value="<?php echo isset($data['city'])?$data['city']:''; ?>" class="validate">
           <label for="city">Ville</label>
         </div>
       </div>
@@ -86,8 +92,14 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input name="amount" id="amount" type="text" class="validate">
+          <input name="amount" id="amount" type="text" value="<?php echo isset($data['amount'])?$data['amount']:''; ?>" class="validate">
           <label for="amount">Montant</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="donation" id="donation" type="text" value="<?php echo isset($data['donation'])?$data['donation']:''; ?>" class="validate">
+          <label for="donation">Don</label>
         </div>
       </div>
       <p>
@@ -112,6 +124,12 @@
         &nbsp;<label>
             <input name="annuaire" id="annuaire" type="checkbox" />
             <span>Ajout Annuaire</span>
+        </label>
+      </p>
+      <p>
+        &nbsp;<label>
+            <input name="asso" id="asso" type="checkbox" />
+            <span>Est-ce une association ?</span>
         </label>
       </p>
     <button class="btn waves-effect waves-light" type="submit" name="action">Ajouter
