@@ -128,7 +128,7 @@
       </p>
       <p>
         &nbsp;<label>
-            <input name="asso" id="asso" type="checkbox" />
+            <input name="is_asso" id="is_asso" type="checkbox" />
             <span>Est-ce une association ?</span>
         </label>
       </p>

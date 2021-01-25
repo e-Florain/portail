@@ -245,6 +245,15 @@ class AdhprosController extends AppController
             } else {
                 $data["cyclos_account"] = False;
             }
+            if (isset($data["is_asso"])) {
+                if ($data["is_asso"] == "on") {
+                    $data["is_asso"] = True;
+                } else {
+                    $data["is_asso"] = False;
+                }
+            } else {
+                $data["is_asso"] = False;
+            }
             $tmp = "";
             if (isset($data["adh_years"])) {
                 foreach ($data["adh_years"] as $adh_year) {

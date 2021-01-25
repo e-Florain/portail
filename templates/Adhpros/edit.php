@@ -145,6 +145,12 @@
             <span>Ajout Annuaire</span>
         </label>
       </p>
+      <p>
+        &nbsp;<label>
+            <input name="is_asso" id="is_asso" <?php if ($adhpro->is_asso) { echo "checked"; } ?> type="checkbox" />
+            <span>Est-ce une association ?</span>
+        </label>
+      </p>
     <button class="btn waves-effect waves-light" type="submit" name="action">Modifier
     <i class="material-icons right">send</i>
     </button>

@@ -146,6 +146,12 @@ if ($trash_view) {
             '?' => ['orderby' => "cyclos_account"]
         ]); ?>
         </th>
+        <th><?= $this->Html->link("Asso?", [
+            'controller' => 'adhpros',
+            'action' => 'index',
+            '?' => ['orderby' => "is_asso"]
+        ]); ?>
+        </th>
         <th><?= $this->Html->link("NL", [
             'controller' => 'adhpros',
             'action' => 'index',
@@ -215,6 +221,13 @@ if ($trash_view) {
         <td>
             <?php 
                 if ($adhpro->cyclos_account) {
+                    echo '<i class="material-icons">done</i>';
+                }
+            ?>
+        </td>
+        <td>
+            <?php 
+                if ($adhpro->is_asso) {
                     echo '<i class="material-icons">done</i>';
                 }
             ?>
