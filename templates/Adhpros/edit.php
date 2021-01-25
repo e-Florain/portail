@@ -77,6 +77,12 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
+          <input name="phonenumber2" id="phonenumber2" type="text" <?php echo 'value="'.$adhpro->phonenumber2.'"'; ?> class="validate">
+          <label for="phonenumber2">Téléphone 2</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
           <input name="address" id="address" type="text" <?php echo 'value="'.$adhpro->address.'"'; ?> class="validate">
           <label for="address">Adresse</label>
         </div>
